@@ -15,9 +15,9 @@ var KGN = {
 	WIDTH: 	0,
 	HEIGHT: 0,	
 
-	CELL_SIZE: 24,
+	CELL_SIZE: 26,
 	CELL_RADIUS: 2,
-	CELL_GAP: 8,
+	CELL_GAP: 12,
 	CELL_NUMBER: 16,
 	INTERVAL: 128,
 	WAVE_INTERVAL: 25,
@@ -27,7 +27,8 @@ var KGN = {
 	MODE_DEFAULT:	0,
 	MODE_GAME_OF_LIFE: 1,
 	
-	BLACK: 	"#000000",	
+	// BLACK: 	"#000000",	
+  BLACK:  "#dd3333", // color between cells, orange
 	SAVE_BTN_IDLE: "#dadada",
 	SAVE_BTN_PRESSED: "#24E33B",
 	OFF: 0x2a,	
