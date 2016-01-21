@@ -15,10 +15,12 @@ var KGN = {
 	WIDTH: 	0,
 	HEIGHT: 0,	
 
-	CELL_SIZE: 26,
+	CELL_SIZE: 16,
 	CELL_RADIUS: 2,
-	CELL_GAP: 12,
-	CELL_NUMBER: 16,
+	CELL_GAP: 6,
+	CELL_NUMBER: 32,
+  // CELL_NUMBER_X: 48,
+  // CELL_NUMBER_Y: 24,
 	INTERVAL: 128,
 	WAVE_INTERVAL: 25,
 	WAVE_FORCE: 80,
@@ -46,7 +48,8 @@ var KGN = {
 	init: function() {				
 		KGN.canvas = document.getElementById('game_world');
 		KGN.ctx = KGN.canvas.getContext('2d');
-		
+
+
 		
 				
 		KGN.WIDTH = KGN.CELL_NUMBER * KGN.CELL_SIZE + (KGN.CELL_NUMBER-1)*KGN.CELL_GAP;
@@ -70,6 +73,37 @@ var KGN = {
 		KGN.state = (iOS) ? KGN.Start : KGN.InGame;				        
 		
 		KGN.loop();		
+
+        make_carve();
+    
+    function make_carve(){
+      base_image = new Image();
+      base_image.src = 'natie-logo-carveout.png';
+      // base_image.onload = function(){
+      //   KGN.ctx.drawImage(base_image, 0,0, KGN.canvas.width, KGN.canvas.height);
+      //   console.log(KGN.ctx);
+      // }
+      // base_image.setAttribute("style", "margin-top:" + $('#game_world')[0].style.marginTop+ "px");
+      // base_image.setAttribute("style", "margin-left:" + $('#game_world')[0].style.marginLeft + "px");
+      // base_image.setAttribute("style", "width:" + $('#game_world')[0].style.width + "px");
+      // base_image.setAttribute("style", "height:" + $('#game_world')[0].style.height + "px");
+      // base_image.setAttribute("style", "position:" + "absolute");
+      base_image.setAttribute("id", "carve");
+      $(document.body).append(base_image);
+      $('#carve').attr({
+        "width" :  $('#game_world').css("width") + "px",
+        "height" : $('#game_world').css("height") + "px",
+        // "position" : "absolute"
+      });
+
+      // $('#carve').css("margin-top", $('#game_world').css("marginTop"));
+      // console.log($('#game_world').css("marginTop"));
+      // $('#carve').css("margin-left", $('#game_world').css("marginLeft"));
+      // console.log($('#game_world').css("marginLeft"));
+      console.log(base_image);
+      
+    }
+    
 	},		
 	
 	update: function() {
@@ -80,6 +114,9 @@ var KGN = {
 		KGN.ctx.fillStyle = KGN.BLACK;
 		KGN.ctx.fillRect(0, 0, KGN.WIDTH, KGN.HEIGHT);		
 		KGN.state.render();
+
+
+
 	},
 	
 	loop: function() {
