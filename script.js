@@ -18,7 +18,7 @@ var KGN = {
 	CELL_SIZE: 16,
 	CELL_RADIUS: 2,
 	CELL_GAP: 6,
-	CELL_NUMBER: 32,
+	CELL_NUMBER:64,
   // CELL_NUMBER_X: 48,
   // CELL_NUMBER_Y: 24,
 	INTERVAL: 128,
@@ -30,7 +30,7 @@ var KGN = {
 	MODE_GAME_OF_LIFE: 1,
 	
 	// BLACK: 	"#000000",	
-  BLACK:  "#dd3333", // color between cells, orange
+  BLACK:  "#f2f2f2", // color between cells, orange  #dd3333
 	SAVE_BTN_IDLE: "#dadada",
 	SAVE_BTN_PRESSED: "#24E33B",
 	OFF: 0x2a,	
@@ -75,10 +75,10 @@ var KGN = {
 		KGN.loop();		
 
         make_carve();
-    
+    $(document.body).css("overflow", "hidden");
     function make_carve(){
       base_image = new Image();
-      base_image.src = 'natie-logo-carveout.png';
+      base_image.src = 'carve.png';
       // base_image.onload = function(){
       //   KGN.ctx.drawImage(base_image, 0,0, KGN.canvas.width, KGN.canvas.height);
       //   console.log(KGN.ctx);
