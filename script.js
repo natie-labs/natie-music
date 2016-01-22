@@ -15,13 +15,13 @@ var KGN = {
 	WIDTH: 	0,
 	HEIGHT: 0,	
 
-	CELL_SIZE: 16,
+	CELL_SIZE: 24,
 	CELL_RADIUS: 2,
 	CELL_GAP: 6,
-	CELL_NUMBER:64,
+	CELL_NUMBER:32,
   // CELL_NUMBER_X: 48,
   // CELL_NUMBER_Y: 24,
-	INTERVAL: 128,
+	INTERVAL: 64,
 	WAVE_INTERVAL: 25,
 	WAVE_FORCE: 80,
 	WAVE_DAMP: 0.1,
@@ -45,37 +45,23 @@ var KGN = {
 	ctx: 				null,			
 	state:				null,
 
+// TODO: click instantly plays sound
+
+
 	init: function() {				
 		KGN.canvas = document.getElementById('game_world');
 		KGN.ctx = KGN.canvas.getContext('2d');
-
-
 		
-				
 		KGN.WIDTH = KGN.CELL_NUMBER * KGN.CELL_SIZE + (KGN.CELL_NUMBER-1)*KGN.CELL_GAP;
 		KGN.HEIGHT = KGN.WIDTH + KGN.CELL_SIZE + KGN.CELL_GAP;
 		
-		
 		KGN.canvas.width = KGN.WIDTH;
 		KGN.canvas.height = KGN.HEIGHT;		
-		
-		var iOS = ( navigator.userAgent.match(/(iPad|iPhone|iPod)/g) ? true : false );
-		
-		KGN.WaveMap.init();
-		if (!iOS){
-			KGN.Input.init();	
-			KGN.Synth.init();
-		}
-		else {
-			KGN.Start.init();
-		}
-		KGN.InGame.init();
-		KGN.state = (iOS) ? KGN.Start : KGN.InGame;				        
-		
-		KGN.loop();		
 
-        make_carve();
+    make_carve();
+    
     $(document.body).css("overflow", "hidden");
+    
     function make_carve(){
       base_image = new Image();
       base_image.src = 'carve.png';
@@ -103,6 +89,23 @@ var KGN = {
       console.log(base_image);
       
     }
+		
+		var iOS = ( navigator.userAgent.match(/(iPad|iPhone|iPod)/g) ? true : false );
+		
+		KGN.WaveMap.init();
+		if (!iOS){
+			KGN.Input.init();	
+			KGN.Synth.init();
+		}
+		else {
+			KGN.Start.init();
+		}
+		KGN.InGame.init();
+		KGN.state = (iOS) ? KGN.Start : KGN.InGame;				        
+		
+		KGN.loop();		
+
+
     
 	},		
 	
