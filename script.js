@@ -66,13 +66,6 @@ var KGN = {
       // callback();
     }
 
-    // make_carve(function(){
-    //   unhide_canvas(function(){
-    //     console.log("scheduled");
-    //   })
-    // })
-    
-
     function make_carve(){
       var d = $.Deferred();
       console.log(d);
@@ -89,7 +82,7 @@ var KGN = {
 
       setTimeout(function () {
         d.resolve();
-      }, 50);
+      }, 500);
       
       return d;
       // callback();
