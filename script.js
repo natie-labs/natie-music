@@ -43,9 +43,6 @@ var KGN = {
 	ctx: 				null,			
 	state:				null,
 
-// TODO: click instantly plays sound
-
-
 	init: function() {				
 		KGN.canvas = document.getElementById('game_world');
 		KGN.ctx = KGN.canvas.getContext('2d');
@@ -236,7 +233,6 @@ KGN.Input = {
    
    in_rect_area: function(x, y, width, height){
 		var result = false;	
-		
 		if (this.x >= x && this.x <= x + width && this.y >= y && this.y <= y + height){
 			result = true;
 		}
@@ -280,7 +276,8 @@ KGN.InGame = {
 						if (KGN.Input.state == KGN.Input.SET){
 							c.status = 1 - c.status;
 							KGN.Input.state = c.status;	
-							KGN.WaveMap.drop(i, j);							
+							KGN.WaveMap.drop(i, j);	
+              KGN.Synth.play(i);      // instantly play note when clicked
 						}
 						else {
 							if (c.status != KGN.Input.state){
@@ -288,7 +285,6 @@ KGN.InGame = {
 								KGN.WaveMap.drop(i, j);
 							}
 						}
-						
 						broke = true;
 						break;
 					}
@@ -377,15 +373,22 @@ KGN.Cell = function(i, j, status){
 		KGN.ctx.fillStyle = this.color;						
 		
 		KGN.ctx.beginPath();
-		KGN.ctx.moveTo(this.x, this.y + KGN.CELL_RADIUS);
-		KGN.ctx.lineTo(this.x, this.y + KGN.CELL_SIZE - KGN.CELL_RADIUS);
-		KGN.ctx.quadraticCurveTo(this.x, this.y + KGN.CELL_SIZE, this.x + KGN.CELL_RADIUS, this.y + KGN.CELL_SIZE);
-		KGN.ctx.lineTo(this.x + KGN.CELL_SIZE - KGN.CELL_RADIUS, this.y + KGN.CELL_SIZE);
-		KGN.ctx.quadraticCurveTo(this.x + KGN.CELL_SIZE, this.y + KGN.CELL_SIZE, this.x + KGN.CELL_SIZE, this.y + KGN.CELL_SIZE - KGN.CELL_RADIUS);
-		KGN.ctx.lineTo(this.x + KGN.CELL_SIZE, this.y + KGN.CELL_RADIUS);
-		KGN.ctx.quadraticCurveTo(this.x + KGN.CELL_SIZE, this.y, this.x + KGN.CELL_SIZE - KGN.CELL_RADIUS, this.y);
-		KGN.ctx.lineTo(this.x + KGN.CELL_RADIUS, this.y);
-		KGN.ctx.quadraticCurveTo(this.x, this.y, this.x, this.y + KGN.CELL_RADIUS);
+
+    // squares mode
+		// KGN.ctx.moveTo(this.x, this.y + KGN.CELL_RADIUS);
+		// KGN.ctx.lineTo(this.x, this.y + KGN.CELL_SIZE - KGN.CELL_RADIUS);
+		// KGN.ctx.quadraticCurveTo(this.x, this.y + KGN.CELL_SIZE, this.x + KGN.CELL_RADIUS, this.y + KGN.CELL_SIZE);
+		// KGN.ctx.lineTo(this.x + KGN.CELL_SIZE - KGN.CELL_RADIUS, this.y + KGN.CELL_SIZE);
+		// KGN.ctx.quadraticCurveTo(this.x + KGN.CELL_SIZE, this.y + KGN.CELL_SIZE, this.x + KGN.CELL_SIZE, this.y + KGN.CELL_SIZE - KGN.CELL_RADIUS);
+		// KGN.ctx.lineTo(this.x + KGN.CELL_SIZE, this.y + KGN.CELL_RADIUS);
+		// KGN.ctx.quadraticCurveTo(this.x + KGN.CELL_SIZE, this.y, this.x + KGN.CELL_SIZE - KGN.CELL_RADIUS, this.y);
+		// KGN.ctx.lineTo(this.x + KGN.CELL_RADIUS, this.y);
+		// KGN.ctx.quadraticCurveTo(this.x, this.y, this.x, this.y + KGN.CELL_RADIUS);
+    
+    // circles mode
+    r = KGN.CELL_SIZE/2;
+    KGN.ctx.arc(this.x+r,this.y+r,r+1,0,2*Math.PI);
+
 		KGN.ctx.fill();		
 		
 	};
