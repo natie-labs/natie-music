@@ -15,7 +15,7 @@ var KGN = {
 	WIDTH: 	0,
 	HEIGHT: 0,	
 
-	CELL_SIZE: 24,
+	CELL_SIZE: 21,
 	CELL_RADIUS: 2,
 	CELL_GAP: 6,
 	CELL_NUMBER:32,
@@ -57,39 +57,48 @@ var KGN = {
 		
 		KGN.canvas.width = KGN.WIDTH;
 		KGN.canvas.height = KGN.HEIGHT;		
-
-    make_carve();
     
     $(document.body).css("overflow", "hidden");
     
+
+    function unhide_canvas(){
+      $("#game_world").css("display", "block");
+      // callback();
+    }
+
+    // make_carve(function(){
+    //   unhide_canvas(function(){
+    //     console.log("scheduled");
+    //   })
+    // })
+    
+
     function make_carve(){
+      var d = $.Deferred();
+      console.log(d);
+
       base_image = new Image();
       base_image.src = 'carve.png';
-      // base_image.onload = function(){
-      //   KGN.ctx.drawImage(base_image, 0,0, KGN.canvas.width, KGN.canvas.height);
-      //   console.log(KGN.ctx);
-      // }
-      // base_image.setAttribute("style", "margin-top:" + $('#game_world')[0].style.marginTop+ "px");
-      // base_image.setAttribute("style", "margin-left:" + $('#game_world')[0].style.marginLeft + "px");
-      // base_image.setAttribute("style", "width:" + $('#game_world')[0].style.width + "px");
-      // base_image.setAttribute("style", "height:" + $('#game_world')[0].style.height + "px");
-      // base_image.setAttribute("style", "position:" + "absolute");
+
       base_image.setAttribute("id", "carve");
       $(document.body).append(base_image);
       $('#carve').attr({
         "width" :  20 + parseInt($('#game_world').css("width")) + "px",
         "height" : 20 + parseInt($('#game_world').css("height")) + "px",
-        // "position" : "absolute"
       });
 
-      // $('#carve').css("margin-top", $('#game_world').css("marginTop"));
-      // console.log($('#game_world').css("marginTop"));
-      // $('#carve').css("margin-left", $('#game_world').css("marginLeft"));
-      // console.log($('#game_world').css("marginLeft"));
-      console.log(base_image);
+      setTimeout(function () {
+        d.resolve();
+      }, 50);
       
+      return d;
+      // callback();
     }
+
+    make_carve().done(unhide_canvas);
 		
+
+
 		var iOS = ( navigator.userAgent.match(/(iPad|iPhone|iPod)/g) ? true : false );
 		
 		KGN.WaveMap.init();
