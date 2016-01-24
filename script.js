@@ -19,8 +19,6 @@ var KGN = {
 	CELL_RADIUS: 2,
 	CELL_GAP: 6,
 	CELL_NUMBER:32,
-  // CELL_NUMBER_X: 48,
-  // CELL_NUMBER_Y: 24,
 	INTERVAL: 64,
 	WAVE_INTERVAL: 25,
 	WAVE_FORCE: 80,
@@ -30,7 +28,7 @@ var KGN = {
 	MODE_GAME_OF_LIFE: 1,
 	
 	// BLACK: 	"#000000",	
-  BLACK:  "#f2f2f2", // color between cells, orange  #dd3333
+  BLACK:  "#f2f2f2",
 	SAVE_BTN_IDLE: "#dadada",
 	SAVE_BTN_PRESSED: "#24E33B",
 	OFF: 0x2a,	
@@ -59,13 +57,12 @@ var KGN = {
 		KGN.canvas.height = KGN.HEIGHT;		
     
     $(document.body).css("overflow", "hidden");
-    
 
     function unhide_canvas(){
       $("#game_world").css("display", "block");
-      // callback();
     }
 
+    // create png mask for canvas
     function make_carve(){
       var d = $.Deferred();
       console.log(d);
@@ -76,8 +73,8 @@ var KGN = {
       base_image.setAttribute("id", "carve");
       $(document.body).append(base_image);
       $('#carve').attr({
-        "width" :  20 + parseInt($('#game_world').css("width")) + "px",
-        "height" : 20 + parseInt($('#game_world').css("height")) + "px",
+        "width" :  1.1 * parseInt($('#game_world').css("width")) + "px",
+        "height" : 1.1 * parseInt($('#game_world').css("width")) + "px",
       });
 
       setTimeout(function () {
@@ -85,12 +82,9 @@ var KGN = {
       }, 500);
       
       return d;
-      // callback();
     }
 
     make_carve().done(unhide_canvas);
-		
-
 
 		var iOS = ( navigator.userAgent.match(/(iPad|iPhone|iPod)/g) ? true : false );
 		
@@ -107,8 +101,14 @@ var KGN = {
 		
 		KGN.loop();		
 
-
+    $("#clear").click(function(){
+      KGN.InGame.clear_map();
+    })
     
+    $("#makeURL").click(function(){
+      console.log("clicked");
+      KGN.InGame.make_url();
+    })
 	},		
 	
 	update: function() {
@@ -119,8 +119,6 @@ var KGN = {
 		KGN.ctx.fillStyle = KGN.BLACK;
 		KGN.ctx.fillRect(0, 0, KGN.WIDTH, KGN.HEIGHT);		
 		KGN.state.render();
-
-
 
 	},
 	
@@ -261,14 +259,30 @@ KGN.InGame = {
 			}
 		}
 		
-		this.clear_btn = new KGN.Button(
-			(this.cells.length/2-3) * (KGN.CELL_SIZE+KGN.CELL_GAP) - 1, 
-			(this.cells.length) * (KGN.CELL_SIZE+KGN.CELL_GAP) - 1, 
-			KGN.CELL_SIZE*2+KGN.CELL_GAP,
-			KGN.CELL_SIZE,
-			'clear'
-		);
+    // x, y, width, height, label
+		// this.clear_btn = new KGN.Button(
+		// 	(this.cells.length/2-3) * (KGN.CELL_SIZE+KGN.CELL_GAP) - 1, 
+		// 	(this.cells.length) * (KGN.CELL_SIZE+KGN.CELL_GAP) - 1, 
+		// 	KGN.CELL_SIZE*2+KGN.CELL_GAP,
+		// 	KGN.CELL_SIZE,
+		// 	'clear'
+		// );
+
+    this.clear_btn = new KGN.Button(
+     0, 
+     0, 
+     KGN.CELL_SIZE*2+KGN.CELL_GAP,
+     KGN.CELL_SIZE,
+     'clear'
+    );
+
 		
+    console.log(  0, 
+     0, 
+     KGN.CELL_SIZE*2+KGN.CELL_GAP,
+     KGN.CELL_SIZE,
+     'clear');
+
 		this.save_btn = new KGN.Button(
 			(this.cells.length/2-1) * (KGN.CELL_SIZE+KGN.CELL_GAP) - 1, 
 			(this.cells.length) * (KGN.CELL_SIZE+KGN.CELL_GAP) - 1, 
@@ -284,10 +298,11 @@ KGN.InGame = {
 			KGN.CELL_SIZE,
 			'default'
 		);
-		
+		    
 	},
 	
 	update: function(){		
+    // button listeners
 		if (this.save_btn.update()){
 			this.make_url();
 		}
@@ -396,7 +411,7 @@ KGN.InGame = {
 	
 	clear_map: function(){
 		this.mode = KGN.MODE_DEFAULT;
-		this.gol_btn.change_label( "default" );
+		this.gol_btn.change_label("default");
 		for (var i = 0; i < this.cells.length; i++){
 			for (var j = 0; j < this.cells[i].length; j++){
 				this.cells[i][j].pause();
@@ -425,29 +440,36 @@ KGN.InGame = {
 }
 
 KGN.Button = function(x, y, width, height, label){
+
+  KGN.buttoncanvas = document.getElementById('buttons');
+  KGN.bctx = KGN.buttoncanvas.getContext('2d');
+  
+  KGN.buttoncanvas.width = KGN.canvas.width;
+  KGN.buttoncanvas.height = KGN.CELL_SIZE*2;
+
 	this.x = x;
 	this.y = y;
 	this.width = width;
 	this.height = height;
-	KGN.ctx.font = "12px sans-serif";
-	this.label_x = x + (width - KGN.ctx.measureText(label).width)/2;
+	KGN.bctx.font = "12px sans-serif";
+	this.label_x = x + (width - KGN.bctx.measureText(label).width)/2;
 	this.label_y = y + height/2;
 	this.label = label;
 	this.pressed = false;
 	
 	this.render = function(){
 		if (this.pressed){
-			KGN.ctx.strokeStyle = KGN.SAVE_BTN_PRESSED;
-			KGN.ctx.fillStyle = KGN.SAVE_BTN_PRESSED;
+			KGN.bctx.strokeStyle = KGN.SAVE_BTN_PRESSED;
+			KGN.bctx.fillStyle = KGN.SAVE_BTN_PRESSED;
 		}
 		else{
-			KGN.ctx.strokeStyle = KGN.SAVE_BTN_IDLE;
-			KGN.ctx.fillStyle = KGN.SAVE_BTN_IDLE;
+			KGN.bctx.strokeStyle = KGN.SAVE_BTN_IDLE;
+			KGN.bctx.fillStyle = KGN.SAVE_BTN_IDLE;
 		}
-		KGN.ctx.strokeRect(this.x, this.y, this.width, this.height);
-		KGN.ctx.font="12px sans-serif";
-		KGN.ctx.textBaseline="middle";
-		KGN.ctx.fillText(this.label, this.label_x, this.label_y);
+		KGN.bctx.strokeRect(this.x, this.y, this.width, this.height);
+		KGN.bctx.font="12px sans-serif";
+		KGN.bctx.textBaseline="middle";
+		KGN.bctx.fillText(this.label, this.label_x, this.label_y);
 	}
 	
 	this.update = function(){
@@ -465,8 +487,8 @@ KGN.Button = function(x, y, width, height, label){
 	}
 	
 	this.change_label = function(new_label){
-		KGN.ctx.font = "12px sans-serif";
-		this.label_x = x + (width - KGN.ctx.measureText(new_label).width)/2;
+		KGN.bctx.font = "12px sans-serif";
+		this.label_x = x + (width - KGN.bctx.measureText(new_label).width)/2;
 		this.label_y = y + height/2;
 		this.label = new_label;
 	}
