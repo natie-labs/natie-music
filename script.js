@@ -391,7 +391,7 @@ KGN.InGame = {
 			}
 			codes += code + ".";
 		}
-		window.history.replaceState('foobar', 'Tonematrix clone', 'index.html'+codes);
+		window.history.replaceState('foobar', 'natie music', 'index.html'+codes);
 	},
 	
 	clear_map: function(){
@@ -403,7 +403,7 @@ KGN.InGame = {
 				this.cells[i][j].status = 0;
 			}
 		}
-		window.history.replaceState('foobar', 'Tonematrix clone', 'index.html');
+		window.history.replaceState('foobar', 'natie music', 'index.html');
 	},
 	
 	toggle_gol: function(){
