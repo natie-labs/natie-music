@@ -82,7 +82,7 @@ var KGN = {
 
       setTimeout(function () {
         d.resolve();
-      }, 1000);
+      }, 500);
       
       return d;
       // callback();
