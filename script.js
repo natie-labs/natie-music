@@ -65,11 +65,9 @@ var KGN = {
     // create png mask for canvas
     function make_carve(){
       var d = $.Deferred();
-      console.log(d);
 
       base_image = new Image();
       base_image.src = 'carve.png';
-
       base_image.setAttribute("id", "carve");
       $(document.body).append(base_image);
       $('#carve').attr({
@@ -106,16 +104,14 @@ var KGN = {
     });
     
     $("#makeURL").click(function(){
-      console.log("clicked");
       KGN.InGame.make_url();
     });
 
     $('#random').click(function(){
-      console.log("clicked");
       for (var i = 0; i < KGN.InGame.cells.length; i++){
         for (var j = 0; j < KGN.InGame.cells[i].length; j++){ 
           KGN.InGame.cells[i][j].pause();
-          KGN.InGame.cells[i][j].status = KGN.random(2);
+          KGN.InGame.cells[i][j].status = KGN.random();
         }
       }
     })
@@ -139,7 +135,7 @@ var KGN = {
        KGN.render();
 	},
 	
-	random: function(n){
+	random: function(){
 		// return ~~(Math.random()*n);
     var dist = [0,0,0,0,0,0,0,0,0,1];
     var i = Math.floor(Math.random() * dist.length);
@@ -270,54 +266,11 @@ KGN.InGame = {
 				var mask = 1<<j;
 				this.cells[i][j] = new KGN.Cell(i, j, (code&mask)>>j);
 			}
-		}
-		
-    // x, y, width, height, label
-		// this.clear_btn = new KGN.Button(
-		// 	(this.cells.length/2-3) * (KGN.CELL_SIZE+KGN.CELL_GAP) - 1, 
-		// 	(this.cells.length) * (KGN.CELL_SIZE+KGN.CELL_GAP) - 1, 
-		// 	KGN.CELL_SIZE*2+KGN.CELL_GAP,
-		// 	KGN.CELL_SIZE,
-		// 	'clear'
-		// );
-
-  //   this.clear_btn = new KGN.Button(
-  //    0, 
-  //    0, 
-  //    KGN.CELL_SIZE*2+KGN.CELL_GAP,
-  //    KGN.CELL_SIZE,
-  //    'clear'
-  //   );
-
-		// this.save_btn = new KGN.Button(
-		// 	(this.cells.length/2-1) * (KGN.CELL_SIZE+KGN.CELL_GAP) - 1, 
-		// 	(this.cells.length) * (KGN.CELL_SIZE+KGN.CELL_GAP) - 1, 
-		// 	KGN.CELL_SIZE*2+KGN.CELL_GAP,
-		// 	KGN.CELL_SIZE,
-		// 	'url'
-		// );
-		
-		// this.gol_btn = new KGN.Button(
-		// 	(this.cells.length/2+1) * (KGN.CELL_SIZE+KGN.CELL_GAP) - 1, 
-		// 	(this.cells.length) * (KGN.CELL_SIZE+KGN.CELL_GAP) - 1, 
-		// 	KGN.CELL_SIZE*3+KGN.CELL_GAP*2,
-		// 	KGN.CELL_SIZE,
-		// 	'default'
-		// );
-		    
+		}   
 	},
 	
 	update: function(){		
-    // button listeners
-		// if (this.save_btn.update()){
-		// 	this.make_url();
-		// }
-		// else if (this.clear_btn.update()){
-		// 	this.clear_map();
-		// }	
-		// else if (this.gol_btn.update()){
-		// 	this.toggle_gol();
-		// }
+
 		if (KGN.Input.state != KGN.Input.UNSET){	
 			var broke = false;
 			for (var i = 0; i < this.cells.length; i++){
@@ -358,35 +311,6 @@ KGN.InGame = {
 				}
 			}
 			this.prev_column = this.column;
-			
-			// if (this.mode == KGN.MODE_GAME_OF_LIFE && this.column == KGN.CELL_NUMBER - 1){
-			// 	for (var i = 0; i < this.cells.length; i++){
-			// 		for (var j = 0; j < this.cells[i].length; j++){
-			// 			var alive = 0;	
-			// 			for (var k = 0; k < this.neighbour.length; k++){
-			// 				var ni = i + this.neighbour[k][0];
-			// 				var nj = j + this.neighbour[k][1];
-			// 				ni = (ni < 0) ? ni + this.cells.length : (ni >= this.cells.length) ? ni - this.cells.length : ni;
-			// 				nj = (nj < 0) ? nj + this.cells[i].length : (nj >= this.cells[i].length) ? nj - this.cells[i].length : nj;
-			// 				alive += this.cells[ni][nj].status;
-			// 			}
-			// 			if (alive < 2 || alive > 3){
-			// 				this.cells[i][j].next_status = 0;
-			// 			}					
-			// 			else if (alive == 3){
-			// 				this.cells[i][j].next_status = 1;
-			// 			}
-			// 			else {
-			// 				this.cells[i][j].next_status = this.cells[i][j].status;
-			// 			}
-			// 		}
-			// 	}
-			// 	for (var i = 0; i < this.cells.length; i++){
-			// 		for (var j = 0; j < this.cells[i].length; j++){
-			// 			this.cells[i][j].status = this.cells[i][j].next_status;
-			// 		}
-			// 	}
-			// }
 		}
 		
 		KGN.WaveMap.update();		
@@ -426,80 +350,9 @@ KGN.InGame = {
 		}
 		window.history.replaceState('foobar', 'natie music', 'index.html');
 	},
-	
-	toggle_gol: function(){
-		this.mode = 1 - this.mode;
-		
-		if (this.mode == KGN.MODE_DEFAULT){
-			this.gol_btn.change_label( "default" );
-		}
-		else{
-			this.gol_btn.change_label( "game of life" );
-			for (var i = 0; i < this.cells.length; i++){
-				for (var j = 0; j < this.cells[i].length; j++){	
-					this.cells[i][j].pause();
-					this.cells[i][j].status = KGN.random(2);
-				}
-			}
-		}
-	}
+
 }
 
-// KGN.Button = function(x, y, width, height, label){
-
-//   KGN.buttoncanvas = document.getElementById('buttons');
-//   KGN.bctx = KGN.buttoncanvas.getContext('2d');
-  
-//   KGN.buttoncanvas.width = KGN.canvas.width;
-//   KGN.buttoncanvas.height = KGN.CELL_SIZE*2;
-
-// 	this.x = x;
-// 	this.y = y;
-// 	this.width = width;
-// 	this.height = height;
-// 	KGN.bctx.font = "12px sans-serif";
-// 	this.label_x = x + (width - KGN.bctx.measureText(label).width)/2;
-// 	this.label_y = y + height/2;
-// 	this.label = label;
-// 	this.pressed = false;
-	
-// 	// this.render = function(){
-// 	// 	if (this.pressed){
-// 	// 		KGN.bctx.strokeStyle = KGN.SAVE_BTN_PRESSED;
-// 	// 		KGN.bctx.fillStyle = KGN.SAVE_BTN_PRESSED;
-// 	// 	}
-// 	// 	else{
-// 	// 		KGN.bctx.strokeStyle = KGN.SAVE_BTN_IDLE;
-// 	// 		KGN.bctx.fillStyle = KGN.SAVE_BTN_IDLE;
-// 	// 	}
-// 	// 	KGN.bctx.strokeRect(this.x, this.y, this.width, this.height);
-// 	// 	KGN.bctx.font="12px sans-serif";
-// 	// 	KGN.bctx.textBaseline="middle";
-// 	// 	KGN.bctx.fillText(this.label, this.label_x, this.label_y);
-// 	// }
-	
-// 	this.update = function(){
-// 		var result = false;
-// 		if (KGN.Input.state == KGN.Input.SET && KGN.Input.moved == false && KGN.Input.in_rect_area(this.x, this.y, this.width, this.height)){
-// 			if (!this.pressed){
-// 				this.pressed = true;
-// 				result = true;
-// 			}
-// 		}	
-// 		else{
-// 			this.pressed = false;
-// 		}	
-// 		return result;
-// 	}
-	
-// 	this.change_label = function(new_label){
-// 		KGN.bctx.font = "12px sans-serif";
-// 		this.label_x = x + (width - KGN.bctx.measureText(new_label).width)/2;
-// 		this.label_y = y + height/2;
-// 		this.label = new_label;
-// 	}
-	
-// }
 
 KGN.Cell = function(i, j, status){
 	this.i = i;
@@ -686,7 +539,7 @@ KGN.Voice = function(context, frequency){
 	this.play = function(){
 		var now = KGN.Synth.context.currentTime;
   		
-  		this.gain.gain.cancelScheduledValues(now);
+    this.gain.gain.cancelScheduledValues(now);
 		this.gain.gain.setValueAtTime(this.gain.gain.value, now);
 		this.gain.gain.linearRampToValueAtTime(KGN.VOLUME, now + KGN.ENVELOPE[0]);
 		this.gain.gain.linearRampToValueAtTime(KGN.ENVELOPE[2], now + KGN.ENVELOPE[0] + KGN.ENVELOPE[1]);
