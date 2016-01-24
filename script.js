@@ -19,8 +19,6 @@ var KGN = {
 	CELL_RADIUS: 2,
 	CELL_GAP: 6,
 	CELL_NUMBER:32,
-  // CELL_NUMBER_X: 48,
-  // CELL_NUMBER_Y: 24,
 	INTERVAL: 64,
 	WAVE_INTERVAL: 25,
 	WAVE_FORCE: 80,
@@ -30,7 +28,7 @@ var KGN = {
 	MODE_GAME_OF_LIFE: 1,
 	
 	// BLACK: 	"#000000",	
-  BLACK:  "#f2f2f2", // color between cells, orange  #dd3333
+  BLACK:  "#f2f2f2",
 	SAVE_BTN_IDLE: "#dadada",
 	SAVE_BTN_PRESSED: "#24E33B",
 	OFF: 0x2a,	
@@ -59,25 +57,22 @@ var KGN = {
 		KGN.canvas.height = KGN.HEIGHT;		
     
     $(document.body).css("overflow", "hidden");
-    
 
     function unhide_canvas(){
       $("#game_world").css("display", "block");
-      // callback();
     }
 
+    // create png mask for canvas
     function make_carve(){
       var d = $.Deferred();
-      console.log(d);
 
       base_image = new Image();
       base_image.src = 'carve.png';
-
       base_image.setAttribute("id", "carve");
       $(document.body).append(base_image);
       $('#carve').attr({
-        "width" :  20 + parseInt($('#game_world').css("width")) + "px",
-        "height" : 20 + parseInt($('#game_world').css("height")) + "px",
+        "width" :  1.1 * parseInt($('#game_world').css("width")) + "px",
+        "height" : 1.1 * parseInt($('#game_world').css("width")) + "px",
       });
 
       setTimeout(function () {
@@ -85,12 +80,9 @@ var KGN = {
       }, 500);
       
       return d;
-      // callback();
     }
 
     make_carve().done(unhide_canvas);
-		
-
 
 		var iOS = ( navigator.userAgent.match(/(iPad|iPhone|iPod)/g) ? true : false );
 		
@@ -107,8 +99,22 @@ var KGN = {
 		
 		KGN.loop();		
 
-
+    $("#clear").click(function(){
+      KGN.InGame.clear_map();
+    });
     
+    $("#makeURL").click(function(){
+      KGN.InGame.make_url();
+    });
+
+    $('#random').click(function(){
+      for (var i = 0; i < KGN.InGame.cells.length; i++){
+        for (var j = 0; j < KGN.InGame.cells[i].length; j++){ 
+          KGN.InGame.cells[i][j].pause();
+          KGN.InGame.cells[i][j].status = KGN.random();
+        }
+      }
+    })
 	},		
 	
 	update: function() {
@@ -120,8 +126,6 @@ var KGN = {
 		KGN.ctx.fillRect(0, 0, KGN.WIDTH, KGN.HEIGHT);		
 		KGN.state.render();
 
-
-
 	},
 	
 	loop: function() {
@@ -131,8 +135,11 @@ var KGN = {
        KGN.render();
 	},
 	
-	random: function(n){
-		return ~~(Math.random()*n);
+	random: function(){
+		// return ~~(Math.random()*n);
+    var dist = [0,0,0,0,0,0,0,0,0,1];
+    var i = Math.floor(Math.random() * dist.length);
+    return dist[i];
 	}
 };
 
@@ -259,44 +266,11 @@ KGN.InGame = {
 				var mask = 1<<j;
 				this.cells[i][j] = new KGN.Cell(i, j, (code&mask)>>j);
 			}
-		}
-		
-		this.clear_btn = new KGN.Button(
-			(this.cells.length/2-3) * (KGN.CELL_SIZE+KGN.CELL_GAP) - 1, 
-			(this.cells.length) * (KGN.CELL_SIZE+KGN.CELL_GAP) - 1, 
-			KGN.CELL_SIZE*2+KGN.CELL_GAP,
-			KGN.CELL_SIZE,
-			'clear'
-		);
-		
-		this.save_btn = new KGN.Button(
-			(this.cells.length/2-1) * (KGN.CELL_SIZE+KGN.CELL_GAP) - 1, 
-			(this.cells.length) * (KGN.CELL_SIZE+KGN.CELL_GAP) - 1, 
-			KGN.CELL_SIZE*2+KGN.CELL_GAP,
-			KGN.CELL_SIZE,
-			'url'
-		);
-		
-		this.gol_btn = new KGN.Button(
-			(this.cells.length/2+1) * (KGN.CELL_SIZE+KGN.CELL_GAP) - 1, 
-			(this.cells.length) * (KGN.CELL_SIZE+KGN.CELL_GAP) - 1, 
-			KGN.CELL_SIZE*3+KGN.CELL_GAP*2,
-			KGN.CELL_SIZE,
-			'default'
-		);
-		
+		}   
 	},
 	
 	update: function(){		
-		if (this.save_btn.update()){
-			this.make_url();
-		}
-		else if (this.clear_btn.update()){
-			this.clear_map();
-		}	
-		else if (this.gol_btn.update()){
-			this.toggle_gol();
-		}
+
 		if (KGN.Input.state != KGN.Input.UNSET){	
 			var broke = false;
 			for (var i = 0; i < this.cells.length; i++){
@@ -337,35 +311,6 @@ KGN.InGame = {
 				}
 			}
 			this.prev_column = this.column;
-			
-			if (this.mode == KGN.MODE_GAME_OF_LIFE && this.column == KGN.CELL_NUMBER - 1){
-				for (var i = 0; i < this.cells.length; i++){
-					for (var j = 0; j < this.cells[i].length; j++){
-						var alive = 0;	
-						for (var k = 0; k < this.neighbour.length; k++){
-							var ni = i + this.neighbour[k][0];
-							var nj = j + this.neighbour[k][1];
-							ni = (ni < 0) ? ni + this.cells.length : (ni >= this.cells.length) ? ni - this.cells.length : ni;
-							nj = (nj < 0) ? nj + this.cells[i].length : (nj >= this.cells[i].length) ? nj - this.cells[i].length : nj;
-							alive += this.cells[ni][nj].status;
-						}
-						if (alive < 2 || alive > 3){
-							this.cells[i][j].next_status = 0;
-						}					
-						else if (alive == 3){
-							this.cells[i][j].next_status = 1;
-						}
-						else {
-							this.cells[i][j].next_status = this.cells[i][j].status;
-						}
-					}
-				}
-				for (var i = 0; i < this.cells.length; i++){
-					for (var j = 0; j < this.cells[i].length; j++){
-						this.cells[i][j].status = this.cells[i][j].next_status;
-					}
-				}
-			}
 		}
 		
 		KGN.WaveMap.update();		
@@ -377,9 +322,9 @@ KGN.InGame = {
 				this.cells[i][j].render();
 			}
 		}
-		this.save_btn.render();
-		this.clear_btn.render();
-		this.gol_btn.render();
+		// this.save_btn.render();
+		// this.clear_btn.render();
+		// this.gol_btn.render();
 	},
 	
 	make_url: function(){
@@ -396,7 +341,7 @@ KGN.InGame = {
 	
 	clear_map: function(){
 		this.mode = KGN.MODE_DEFAULT;
-		this.gol_btn.change_label( "default" );
+		// this.gol_btn.change_label("default");
 		for (var i = 0; i < this.cells.length; i++){
 			for (var j = 0; j < this.cells[i].length; j++){
 				this.cells[i][j].pause();
@@ -405,73 +350,9 @@ KGN.InGame = {
 		}
 		window.history.replaceState('foobar', 'natie music', 'index.html');
 	},
-	
-	toggle_gol: function(){
-		this.mode = 1 - this.mode;
-		
-		if (this.mode == KGN.MODE_DEFAULT){
-			this.gol_btn.change_label( "default" );
-		}
-		else{
-			this.gol_btn.change_label( "game of life" );
-			for (var i = 0; i < this.cells.length; i++){
-				for (var j = 0; j < this.cells[i].length; j++){	
-					this.cells[i][j].pause();
-					this.cells[i][j].status = KGN.random(2);
-				}
-			}
-		}
-	}
+
 }
 
-KGN.Button = function(x, y, width, height, label){
-	this.x = x;
-	this.y = y;
-	this.width = width;
-	this.height = height;
-	KGN.ctx.font = "12px sans-serif";
-	this.label_x = x + (width - KGN.ctx.measureText(label).width)/2;
-	this.label_y = y + height/2;
-	this.label = label;
-	this.pressed = false;
-	
-	this.render = function(){
-		if (this.pressed){
-			KGN.ctx.strokeStyle = KGN.SAVE_BTN_PRESSED;
-			KGN.ctx.fillStyle = KGN.SAVE_BTN_PRESSED;
-		}
-		else{
-			KGN.ctx.strokeStyle = KGN.SAVE_BTN_IDLE;
-			KGN.ctx.fillStyle = KGN.SAVE_BTN_IDLE;
-		}
-		KGN.ctx.strokeRect(this.x, this.y, this.width, this.height);
-		KGN.ctx.font="12px sans-serif";
-		KGN.ctx.textBaseline="middle";
-		KGN.ctx.fillText(this.label, this.label_x, this.label_y);
-	}
-	
-	this.update = function(){
-		var result = false;
-		if (KGN.Input.state == KGN.Input.SET && KGN.Input.moved == false && KGN.Input.in_rect_area(this.x, this.y, this.width, this.height)){
-			if (!this.pressed){
-				this.pressed = true;
-				result = true;
-			}
-		}	
-		else{
-			this.pressed = false;
-		}	
-		return result;
-	}
-	
-	this.change_label = function(new_label){
-		KGN.ctx.font = "12px sans-serif";
-		this.label_x = x + (width - KGN.ctx.measureText(new_label).width)/2;
-		this.label_y = y + height/2;
-		this.label = new_label;
-	}
-	
-}
 
 KGN.Cell = function(i, j, status){
 	this.i = i;
@@ -658,7 +539,7 @@ KGN.Voice = function(context, frequency){
 	this.play = function(){
 		var now = KGN.Synth.context.currentTime;
   		
-  		this.gain.gain.cancelScheduledValues(now);
+    this.gain.gain.cancelScheduledValues(now);
 		this.gain.gain.setValueAtTime(this.gain.gain.value, now);
 		this.gain.gain.linearRampToValueAtTime(KGN.VOLUME, now + KGN.ENVELOPE[0]);
 		this.gain.gain.linearRampToValueAtTime(KGN.ENVELOPE[2], now + KGN.ENVELOPE[0] + KGN.ENVELOPE[1]);
