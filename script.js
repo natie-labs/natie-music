@@ -77,8 +77,8 @@ var KGN = {
       base_image.setAttribute("id", "carve");
       $(document.body).append(base_image);
       $('#carve').attr({
-        "width" :  $('#game_world').css("width") + "px",
-        "height" : $('#game_world').css("height") + "px",
+        "width" :  20 + parseInt($('#game_world').css("width")) + "px",
+        "height" : 20 + parseInt($('#game_world').css("height")) + "px",
         // "position" : "absolute"
       });
 

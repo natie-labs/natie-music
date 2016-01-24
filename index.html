@@ -12,6 +12,7 @@
       .pattern{
         background: url("pattern.jpg") center/cover no-repeat transparent;
         /*position: relative;*/
+        z-index: 20;
         position: absolute;
         display: block;
         width: 100%;
@@ -31,8 +32,9 @@
 			window.addEventListener('load', KGN.init, false);						
 		</script>
 	</head>
+  <div class="pattern"></div>
 		<div id="container">
-      <!-- <div class="pattern"></div> -->
+      
 			<div class="sub_container">
 				<canvas id="game_world">
 						
