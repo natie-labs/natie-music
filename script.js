@@ -24,9 +24,8 @@ var KGN = {
 	WAVE_FORCE: 80,
 	WAVE_DAMP: 0.1,
 	
-	// MODE_DEFAULT:	0,
-	// MODE_GAME_OF_LIFE: 1,
-  shape: 1,
+  // shape of keys
+  shape: 0,
 	
 	// BLACK: 	"#000000",	
   BLACK:  "#f2f2f2",
