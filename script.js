@@ -106,8 +106,10 @@ var KGN = {
     });
 
     $('#random').click(function(){
-      for (var i = 0; i < KGN.InGame.cells.length; i++){
-        for (var j = 0; j < KGN.InGame.cells[i].length; j++){ 
+      var istart = ~~(KGN.InGame.cells.length/3);
+      console.log(istart);
+      for (var i = istart; i < KGN.InGame.cells.length-istart; i++){
+        for (var j = 0; j < KGN.InGame.cells[0].length; j++){ 
           KGN.InGame.cells[i][j].pause();
           KGN.InGame.cells[i][j].status = KGN.random();
         }
