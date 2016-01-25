@@ -106,8 +106,10 @@ var KGN = {
     });
 
     $('#random').click(function(){
-      for (var i = 0; i < KGN.InGame.cells.length; i++){
-        for (var j = 0; j < KGN.InGame.cells[i].length; j++){ 
+      var istart = ~~(KGN.InGame.cells.length/3);
+      console.log(istart);
+      for (var i = istart; i < KGN.InGame.cells.length-istart; i++){
+        for (var j = 0; j < KGN.InGame.cells[0].length; j++){ 
           KGN.InGame.cells[i][j].pause();
           KGN.InGame.cells[i][j].status = KGN.random();
         }
@@ -115,7 +117,7 @@ var KGN = {
     });
 
     $("#shape").click(function(){
-      KGN.shape=(1+KGN.shape)%3;
+      KGN.shape=1-KGN.shape;
     });
 	},		
 	
@@ -392,33 +394,30 @@ KGN.Cell = function(i, j, status){
       KGN.ctx.quadraticCurveTo(this.x, this.y, this.x, this.y + KGN.CELL_RADIUS);
 
     // circles
-    } else if (KGN.shape==1){
+    } else {
       r = KGN.CELL_SIZE/2;
       KGN.ctx.arc(this.x+r,this.y+r,r+1,0,2*Math.PI);
 
     // triangles
-    } else {
-      
-      size = KGN.CELL_SIZE;
-      x = j * (size+KGN.CELL_GAP);
-      y = i * (size+KGN.CELL_GAP);    
-      side = size+2;
-      h = side * (Math.sqrt(3)/2);
-      if ((this.i+this.j)%2==0){    // on a diagnal
-        KGN.ctx.moveTo(x, y-h / 2);
-        KGN.ctx.lineTo(x-side / 2, y + h / 2);
-        KGN.ctx.lineTo(x+side / 2, y+h / 2);
-        KGN.ctx.lineTo(x, y-h / 2);
-      }else {
-        KGN.ctx.moveTo(x-side/2, y-h/2);
-        KGN.ctx.lineTo(x +side / 2, y - h/2);
-        KGN.ctx.lineTo(x, y+h / 2);
-        KGN.ctx.moveTo(x-side/2, y-h/2);
-      }
-      
-    }
-    // circles mode
-
+    } 
+    // else {
+    //   size = KGN.CELL_SIZE;
+    //   x = j * (size/2+KGN.CELL_GAP);
+    //   y = i * (size+KGN.CELL_GAP);    
+    //   side = size+2;
+    //   h = side * (Math.sqrt(3)/2);
+    //   if ((this.i+this.j)%2==0){    // on a diagnal
+    //     KGN.ctx.moveTo(x, y-h / 2);
+    //     KGN.ctx.lineTo(x-side / 2, y + h / 2);
+    //     KGN.ctx.lineTo(x+side / 2, y+h / 2);
+    //     KGN.ctx.lineTo(x, y-h / 2);
+    //   }else {
+    //     KGN.ctx.moveTo(x-side/2, y-h/2);
+    //     KGN.ctx.lineTo(x +side / 2, y - h/2);
+    //     KGN.ctx.lineTo(x, y+h / 2);
+    //     KGN.ctx.moveTo(x-side/2, y-h/2);
+    //   }
+    // }
 
 		KGN.ctx.fill();		
 		
