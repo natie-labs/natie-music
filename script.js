@@ -29,8 +29,8 @@ var KGN = {
 	
 	// BLACK: 	"#000000",	
   BLACK:  "#f2f2f2",
-	SAVE_BTN_IDLE: "#dadada",
-	SAVE_BTN_PRESSED: "#24E33B",
+	// SAVE_BTN_IDLE: "#dadada",
+	// SAVE_BTN_PRESSED: "#24E33B",
 	OFF: 0x2a,	
 	ON: 0xda,
 	
@@ -505,7 +505,7 @@ KGN.Synth = {
 		this.context = new AudioContext();
 		this.reverb = this.context.createConvolver();
 		var rate = this.context.sampleRate
-		, length = rate * 2
+		, length = rate * 2+1000
 		, decay = 15
 		, impulse = this.context.createBuffer(2, length, rate)
 		, impulseL = impulse.getChannelData(0)
