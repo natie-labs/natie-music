@@ -11,6 +11,8 @@ window.requestAnimFrame = (function(){
 		  };
 })();
 
+var IMG_DATA = null;
+
 var KGN = {
 	WIDTH: 	0,
 	HEIGHT: 0,	
@@ -23,14 +25,15 @@ var KGN = {
 	WAVE_INTERVAL: 25,
 	WAVE_FORCE: 80,
 	WAVE_DAMP: 0.1,
+
 	
   // shape of keys
   shape: 0,
 	
 	// BLACK: 	"#000000",	
   BLACK:  "#f2f2f2",
-	SAVE_BTN_IDLE: "#dadada",
-	SAVE_BTN_PRESSED: "#24E33B",
+	// SAVE_BTN_IDLE: "#dadada",
+	// SAVE_BTN_PRESSED: "#24E33B",
 	OFF: 0x2a,	
 	ON: 0xda,
 	
@@ -63,14 +66,34 @@ var KGN = {
     function make_carve(){
       var d = $.Deferred();
 
+      var canvas = document.getElementById('carveout');
+      var ctx = canvas.getContext("2d");
+      canvas.width = 1.2*document.getElementById('game_world').width;
+      canvas.height = 1.2*document.getElementById('game_world').width;
+
       base_image = new Image();
       base_image.src = 'carve.png';
-      base_image.setAttribute("id", "carve");
-      $(document.body).append(base_image);
-      $('#carve').attr({
-        "width" :  1.1 * parseInt($('#game_world').css("width")) + "px",
-        "height" : 1.1 * parseInt($('#game_world').css("width")) + "px",
-      });
+      // base_image.crossOrigin = "Anonymous";
+      // base_image.setAttribute("id", "carve");
+
+
+      base_image.onload = function(){
+        // var ptn = ctx.createPattern(base_image, "no-repeat");
+        // ctx.fillStyle = ptn;
+        // ctx.fillRect(0,200, canvas.width, canvas.height);
+        ctx.drawImage(base_image, 0, 0, canvas.width, canvas.height);
+        ctx.fill();
+
+        IMG_DATA = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        // carvectx.drawImage(base_image, 0,0);
+      }
+      // $("#carveout").append(base_image);
+      // $('#carve').attr({
+      //   "width" :  1.1 * parseInt($('#game_world').css("width")) + "px",
+      //   "height" : 1.1 * parseInt($('#game_world').css("width")) + "px",
+      // });
+
+      
 
       setTimeout(function () {
         d.resolve();
@@ -118,6 +141,10 @@ var KGN = {
     $("#shape").click(function(){
       KGN.shape=1-KGN.shape;
     });
+
+    $("#carve").click(function(){
+      console.log("carve clicked");
+    })
 	},		
 	
 	update: function() {
@@ -185,7 +212,17 @@ KGN.Input = {
 	init: function(){
 		window.addEventListener('mousedown', function(e) {
 			e.preventDefault();			
-			KGN.Input.set(e);
+      // var topmost = document.elementFromPoint(e.x, e.y);
+      
+      var x = event.pageX - $("#carveout")[0].offsetLeft;
+      var y = event.pageY - $("#carveout")[0].offsetTop;
+
+      var i = ((IMG_DATA.width * y) + x) * 4 + 3;
+      var alpha = IMG_DATA.data[((IMG_DATA.width * y) + x) * 4 + 3];
+
+      if (alpha==0){
+        KGN.Input.set(e);  
+      }
 		}, false);
 
 		window.addEventListener('mousemove', function(e) {
@@ -505,7 +542,7 @@ KGN.Synth = {
 		this.context = new AudioContext();
 		this.reverb = this.context.createConvolver();
 		var rate = this.context.sampleRate
-		, length = rate * 2
+		, length = rate * 2+1000
 		, decay = 15
 		, impulse = this.context.createBuffer(2, length, rate)
 		, impulseL = impulse.getChannelData(0)
