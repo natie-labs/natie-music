@@ -55,8 +55,6 @@ var KGN = {
 		
 		KGN.canvas.width = KGN.WIDTH;
 		KGN.canvas.height = KGN.HEIGHT;		
-    
-    $(document.body).css("overflow", "hidden");
 
     function unhide_canvas(){
       $("#game_world").css("display", "block");
