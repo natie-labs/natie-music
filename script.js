@@ -623,7 +623,7 @@ function make_buttons() {
 }
 
 function share_page(){
-  console.log("clicked")
+  KGN.InGame.make_url();
   var fbpopup = window.open("https://www.facebook.com/sharer/sharer.php?u=" + window.location.href, "pop", "width=600, height=400, scrollbars=no");
   return false;
 }
