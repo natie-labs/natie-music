@@ -14,8 +14,7 @@ window.requestAnimFrame = (function(){
 var IMG_DATA = null;
 
 var KGN = {
-	WIDTH: 	0,
-	HEIGHT: 0,	
+	WIDTH: 	0,     HEIGHT: 0,
 
 	CELL_SIZE: 21,
 	CELL_RADIUS: 2,
@@ -26,28 +25,25 @@ var KGN = {
 	WAVE_FORCE: 80,
 	WAVE_DAMP: 0.1,
 
-	
   // shape of keys
   shape: 0,
-	
-	// BLACK: 	"#000000",	
   BLACK:  "#f2f2f2",
-	// SAVE_BTN_IDLE: "#dadada",
-	// SAVE_BTN_PRESSED: "#24E33B",
 	OFF: 0x2a,	
 	ON: 0xda,
 	
 	VOLUME: 0.5,
-	START_NOTE: 369.99,
+	// START_NOTE: 369.99,
+  START_NOTE: 169.99,
 	NOTE_RATIOS: [1, 9/8, 5/4, 3/2, 5/3, 2],
 	ENVELOPE: new Float32Array([0,0.1,0,0]), //Attack Decay Sustain Release
 		
-	canvas: 			null,
-	ctx: 				null,			
-	state:				null,
+	canvas: null,
+	ctx: 		null,			
+	state:	null,
 
 	init: function() {				
-		KGN.canvas = document.getElementById('game_world');
+		
+    KGN.canvas = document.getElementById('game_world');
 		KGN.ctx = KGN.canvas.getContext('2d');
 		
 		KGN.WIDTH = KGN.CELL_NUMBER * KGN.CELL_SIZE + (KGN.CELL_NUMBER-1)*KGN.CELL_GAP;
@@ -56,50 +52,7 @@ var KGN = {
 		KGN.canvas.width = KGN.WIDTH;
 		KGN.canvas.height = KGN.HEIGHT;		
 
-    function unhide_canvas(){
-      $("#game_world").css("display", "block");
-    }
-
-    // create png mask for canvas
-    function make_carve(){
-      var d = $.Deferred();
-
-      var canvas = document.getElementById('carveout');
-      var ctx = canvas.getContext("2d");
-      canvas.width = 1.2*document.getElementById('game_world').width;
-      canvas.height = 1.2*document.getElementById('game_world').width;
-
-      base_image = new Image();
-      base_image.src = 'carve.png';
-      // base_image.crossOrigin = "Anonymous";
-      // base_image.setAttribute("id", "carve");
-
-
-      base_image.onload = function(){
-        // var ptn = ctx.createPattern(base_image, "no-repeat");
-        // ctx.fillStyle = ptn;
-        // ctx.fillRect(0,200, canvas.width, canvas.height);
-        ctx.drawImage(base_image, 0, 0, canvas.width, canvas.height);
-        ctx.fill();
-
-        IMG_DATA = ctx.getImageData(0, 0, canvas.width, canvas.height);
-        // carvectx.drawImage(base_image, 0,0);
-      }
-      // $("#carveout").append(base_image);
-      // $('#carve').attr({
-      //   "width" :  1.1 * parseInt($('#game_world').css("width")) + "px",
-      //   "height" : 1.1 * parseInt($('#game_world').css("width")) + "px",
-      // });
-
-      
-
-      setTimeout(function () {
-        d.resolve();
-      }, 500);
-      
-      return d;
-    }
-
+    make_buttons();
     make_carve().done(unhide_canvas);
 
 		var iOS = ( navigator.userAgent.match(/(iPad|iPhone|iPod)/g) ? true : false );
@@ -117,32 +70,8 @@ var KGN = {
 		
 		KGN.loop();		
 
-    $("#clear").click(function(){
-      KGN.InGame.clear_map();
-    });
+
     
-    $("#makeURL").click(function(){
-      KGN.InGame.make_url();
-    });
-
-    $('#random').click(function(){
-      var istart = ~~(KGN.InGame.cells.length/3);
-      console.log(istart);
-      for (var i = istart; i < KGN.InGame.cells.length-istart; i++){
-        for (var j = 0; j < KGN.InGame.cells[0].length; j++){ 
-          KGN.InGame.cells[i][j].pause();
-          KGN.InGame.cells[i][j].status = KGN.random();
-        }
-      }
-    });
-
-    $("#shape").click(function(){
-      KGN.shape=1-KGN.shape;
-    });
-
-    $("#carve").click(function(){
-      console.log("carve clicked");
-    })
 	},		
 	
 	update: function() {
@@ -158,7 +87,6 @@ var KGN = {
 	
 	loop: function() {
 		requestAnimFrame( KGN.loop );
-
        KGN.update();
        KGN.render();
 	},
@@ -198,12 +126,9 @@ KGN.Start = {
 };
 
 KGN.Input = {
-	x: 0,
-	y: 0,
-	UNSET: -1,
-	SET: 2,
-	ON: 1,
-	OFF: 0,
+	x: 0,        y: 0,
+	UNSET: -1,   SET: 2,
+	ON: 1,       OFF: 0,
 	state: -1,
 	moved: false,
 	
@@ -612,3 +537,94 @@ KGN.Voice = function(context, frequency){
 		this.gain.gain.linearRampToValueAtTime(KGN.ENVELOPE[2], now + KGN.ENVELOPE[0] + KGN.ENVELOPE[1]);
 	};
 }
+
+
+function unhide_canvas(){
+  $("#game_world").css("display", "block");
+}
+
+// create png mask for canvas
+function make_carve(){
+  var d = $.Deferred();
+
+  var canvas = document.getElementById('carveout');
+  var ctx = canvas.getContext("2d");
+  canvas.width = 1.2*document.getElementById('game_world').width;
+  canvas.height = 1.2*document.getElementById('game_world').width;
+
+  base_image = new Image();
+  base_image.src = 'carve.png';
+
+  base_image.onload = function(){
+    ctx.drawImage(base_image, 0, 0, canvas.width, canvas.height);
+    ctx.fill();
+    IMG_DATA = ctx.getImageData(0, 0, canvas.width, canvas.height);
+  }
+
+  setTimeout(function () {
+    d.resolve();
+  }, 500);
+  
+  return d;
+}
+
+function make_buttons() {
+
+    var buttonData = [
+      {"i" : 0, "name": "clear",      "icon" : "\uf1f8"}, 
+      {"i" : 1, "name": "makeURL",  "icon" : "\uf08e"}, 
+      {"i" : 2, "name": "random",     "icon" : "\uf074"}, 
+      {"i" : 3, "name": "facebook",   "icon" : "\uf09a"}
+    ]
+
+    var svgContainer = d3.select(".buttons").append("svg")
+        .attr("width", 200)
+        .attr("height", 200)
+        .attr("id", "controls");
+
+    var controls = svgContainer.selectAll("g")
+                  .data(buttonData)
+                  .enter().append("g")
+                  .attr("style", "cursor: pointer")
+                  .attr("id", function(d){return d.name});
+
+    var circles = controls.append("circle");
+
+    circles.attr("cx", 40)
+           .attr("cy", function(d) {return d.i * 45 + 40})
+           .attr("r", 18)
+           .style("fill", "none")
+           .style("stroke", "#0d0d0d")
+           .style("stroke-width", 4);
+
+    controls.append("text").attr('font-family', 'FontAwesome')
+           .attr("x", 40)
+          .attr("y", function(d) {return d.i * 45 + 40})
+          .attr('text-anchor', 'middle')
+          .attr('dominant-baseline', 'central')
+          .attr('font-size', '20px')
+          .text(function(d) {
+              return d.icon;
+          });
+
+    $("#facebook").on("click", share_page);
+    $("#clear").click(function(){ KGN.InGame.clear_map(); });
+    $("#makeURL").click(function(){ KGN.InGame.make_url(); });
+    $('#random').click(function() {
+        var istart = ~~(KGN.InGame.cells.length / 3);
+        for (var i = istart; i < KGN.InGame.cells.length - istart; i++) {
+            for (var j = 0; j < KGN.InGame.cells[0].length; j++) {
+                KGN.InGame.cells[i][j].pause();
+                KGN.InGame.cells[i][j].status = KGN.random();
+            }
+        }
+    });
+    // $("#shape").click(function(){ KGN.shape=1-KGN.shape; });
+}
+
+function share_page(){
+  console.log("clicked")
+  var fbpopup = window.open("https://www.facebook.com/sharer/sharer.php?u=" + window.location.href, "pop", "width=600, height=400, scrollbars=no");
+  return false;
+}
+
