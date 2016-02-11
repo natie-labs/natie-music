@@ -579,7 +579,7 @@ function make_buttons() {
 
     var svgContainer = d3.select(".buttons").append("svg")
         .attr("width", 200)
-        .attr("height", 200)
+        .attr("height", 300)
         .attr("id", "controls");
 
     var controls = svgContainer.selectAll("g")
@@ -591,15 +591,15 @@ function make_buttons() {
     var circles = controls.append("circle");
 
     circles.attr("cx", 40)
-           .attr("cy", function(d) {return d.i * 45 + 40})
-           .attr("r", 18)
+           .attr("cy", function(d) {return d.i * 55 + 40})
+           .attr("r", 20)
            .style("fill", "none")
            .style("stroke", "#0d0d0d")
            .style("stroke-width", 4);
 
     controls.append("text").attr('font-family', 'FontAwesome')
            .attr("x", 40)
-          .attr("y", function(d) {return d.i * 45 + 40})
+          .attr("y", function(d) {return d.i * 55 + 42})
           .attr('text-anchor', 'middle')
           .attr('dominant-baseline', 'central')
           .attr('font-size', '20px')
