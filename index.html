@@ -2,13 +2,21 @@
 <html lang="jp">
 
 <head>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    
     <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/components/menu.min.css">
     <meta charset="utf-8">
     <title>natie music</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tipsy/1.0.2/jquery.tipsy.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.tipsy/1.0.2/jquery.tipsy.css">
+    <link href="http://db.onlinewebfonts.com/c/5d35a36bacbab824395170f9d9d949ea?family=IndustryW00-Book" rel="stylesheet" type="text/css"/>
+    <script src="script.js"></script>
+    
+
     <style type="text/css">
+    /*@import url(http://db.onlinewebfonts.com/c/5d35a36bacbab824395170f9d9d949ea?family=IndustryW00-Book);*/
     body {
         margin: 0;
         padding: 0;
@@ -90,8 +98,18 @@
         z-index: 15;
 
     }
+    .tipsy {
+      font-family: "IndustryW00-Book";
+      font-size: 1em;
+      src: url("http://db.onlinewebfonts.com/t/5d35a36bacbab824395170f9d9d949ea.eot");
+      src: url("http://db.onlinewebfonts.com/t/5d35a36bacbab824395170f9d9d949ea.eot?#iefix") format("embedded-opentype"),
+      url("http://db.onlinewebfonts.com/t/5d35a36bacbab824395170f9d9d949ea.woff") format("woff"),
+      url("http://db.onlinewebfonts.com/t/5d35a36bacbab824395170f9d9d949ea.ttf") format("truetype"),
+      url("http://db.onlinewebfonts.com/t/5d35a36bacbab824395170f9d9d949ea.svg#IndustryW00-Book") format("svg");
+    }
+
     </style>
-    <script src="script.js"></script>
+    
     <script>
     window.addEventListener('load', KGN.init, false);
     </script>
@@ -100,13 +118,6 @@
 <canvas id="carveout"></canvas>
 <div id="container">
     <div class="buttons">
-<!--         <div class="ui four item secondary pointing menu">
-            <a class="item" id="clear"> <img src="erase.png"> clear </a>
-            <a class="item" id="makeURL"> <img src="url.png"> get link </a>
-            <a class="item" id="random"> <img src="random.png">random </a>
-            <a class="item" id="shape"> <img src="shape.png"> shape toggle </a>
-            <a class="item" id="fbshare"> <img src="facebook.png"> share </a>
-        </div> -->
     </div>
     <div class="sub_container">
         <canvas id="game_world" tabindex='1'>

@@ -576,7 +576,7 @@ function make_buttons() {
 
     var buttonData = [
       {"i" : 0, "name": "clear",      "icon" : "\uf00d"}, //,      "img" : "clear.png"
-      {"i" : 1, "name": "makeURL",    "icon" : "\uf08e"}, 
+      {"i" : 1, "name": "link",    "icon" : "\uf08e"}, 
       {"i" : 2, "name": "random",     "icon" : "\uf074", }, 
       {"i" : 3, "name": "facebook",   "icon" : "\uf09a"},
       {"i" : 4, "name": "twitter",    "icon" : "\uf099"}
@@ -591,7 +591,8 @@ function make_buttons() {
                   .data(buttonData)
                   .enter().append("g")
                   .attr("style", "cursor: pointer")
-                  .attr("id", function(d){return d.name});
+                  .attr("id", function(d){return d.name})
+                  .attr("class", "controlButtons");
 
     var circles = controls.append("circle");
 
@@ -618,10 +619,22 @@ function make_buttons() {
     //         .attr("height", 17)
     //         .attr("xlink:href", function(d) {return d.img})
 
+    $(document).ready(
+      $(".controlButtons").tipsy({
+      gravity: 's',
+      html: true,
+      title: function() {
+        var d = this.__data__;
+        return d.name.replace(/(\r\n|\n|\r)/gm,"") ;
+      },
+      fade: true,
+
+    }));
+
     $("#facebook").on("click", function(){share_page("facebook")});
     $("#twitter").on("click", function() {share_page("twitter")});
     $("#clear").click(function(){ KGN.InGame.clear_map(); });
-    $("#makeURL").click(function(){ KGN.InGame.make_url(); });
+    $("#link").click(function(){ KGN.InGame.make_url(); });
     $('#random').click(function() {
         var istart = ~~(KGN.InGame.cells.length / 3);
         for (var i = istart; i < KGN.InGame.cells.length - istart; i++) {
