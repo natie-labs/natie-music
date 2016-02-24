@@ -578,7 +578,8 @@ function make_buttons() {
       {"i" : 0, "name": "clear",      "icon" : "\uf1f8"}, 
       {"i" : 1, "name": "makeURL",  "icon" : "\uf08e"}, 
       {"i" : 2, "name": "random",     "icon" : "\uf074"}, 
-      {"i" : 3, "name": "facebook",   "icon" : "\uf09a"}
+      {"i" : 3, "name": "facebook",   "icon" : "\uf09a"},
+      {"i" : 4, "name": "twitter",   "icon" : "\uf099"}
     ]
 
     var svgContainer = d3.select(".buttons").append("svg")
@@ -612,7 +613,8 @@ function make_buttons() {
               return d.icon;
           });
 
-    $("#facebook").on("click", share_page);
+    $("#facebook").on("click", share_page("facebook"));
+    $("#twitter").on("click", share_page("twitter"));
     $("#clear").click(function(){ KGN.InGame.clear_map(); });
     $("#makeURL").click(function(){ KGN.InGame.make_url(); });
     $('#random').click(function() {
@@ -627,9 +629,14 @@ function make_buttons() {
     // $("#shape").click(function(){ KGN.shape=1-KGN.shape; });
 }
 
-function share_page(){
+function share_page(service) {
   KGN.InGame.make_url();
-  var fbpopup = window.open("https://www.facebook.com/sharer/sharer.php?u=" + window.location.href, "pop", "width=600, height=400, scrollbars=no");
-  return false;
+  if (service == "facebook") {
+    var fbpopup = window.open("https://www.facebook.com/sharer/sharer.php?u=" + window.location.href, "pop", "width=600, height=400, scrollbars=no");
+    return false;
+  }
+  
+
 }
+
 
