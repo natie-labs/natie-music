@@ -613,8 +613,8 @@ function make_buttons() {
               return d.icon;
           });
 
-    $("#facebook").on("click", share_page("facebook"));
-    $("#twitter").on("click", share_page("twitter"));
+    $("#facebook").on("click", function(){share_page("facebook")});
+    $("#twitter").on("click", function() {share_page("twitter")});
     $("#clear").click(function(){ KGN.InGame.clear_map(); });
     $("#makeURL").click(function(){ KGN.InGame.make_url(); });
     $('#random').click(function() {
@@ -635,8 +635,9 @@ function share_page(service) {
     var fbpopup = window.open("https://www.facebook.com/sharer/sharer.php?u=" + window.location.href, "pop", "width=600, height=400, scrollbars=no");
     return false;
   }
-  
-
+  if (service == "twitter"){
+      window.open("https://twitter.com/share?url="+window.location.href, "share on twitter", "height=600,width=800");
+  }
 }
 
 
