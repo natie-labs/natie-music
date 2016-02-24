@@ -597,9 +597,9 @@ function make_buttons() {
     circles.attr("cx", 40)
            .attr("cy", function(d) {return d.i * 55 + 40})
            .attr("r", 20)
-           .style("fill", "none")
-           .style("stroke", "#0d0d0d")
-           .style("stroke-width", 4);
+           .style("fill", "white")
+           // .style("stroke", "#0d0d0d")
+           // .style("stroke-width", 4);
 
     controls.append("text").attr('font-family', 'FontAwesome')
            .attr("x", 40)
@@ -607,6 +607,7 @@ function make_buttons() {
           .attr('text-anchor', 'middle')
           .attr('dominant-baseline', 'central')
           .attr('font-size', '20px')
+          .style("fill", "rgb(255,125,30)")
           .text(function(d) {
               return d.icon;
           });
