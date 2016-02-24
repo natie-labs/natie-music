@@ -55,6 +55,7 @@ var KGN = {
     make_buttons();
     make_carve().done(unhide_canvas);
 
+
 		var iOS = ( navigator.userAgent.match(/(iPad|iPhone|iPod)/g) ? true : false );
 		
 		KGN.WaveMap.init();
@@ -70,19 +71,17 @@ var KGN = {
 		
 		KGN.loop();		
 
-
-    
 	},		
 	
 	update: function() {
 		KGN.state.update();
 	},
-	
+
 	render: function() {
 		KGN.ctx.fillStyle = KGN.BLACK;
 		KGN.ctx.fillRect(0, 0, KGN.WIDTH, KGN.HEIGHT);		
-		KGN.state.render();
 
+		KGN.state.render();
 	},
 	
 	loop: function() {
@@ -272,7 +271,6 @@ KGN.InGame = {
 					KGN.WaveMap.drop(i, this.column);
 				}
 			}
-			this.prev_column = this.column;
 		}
 		
 		KGN.WaveMap.update();		
@@ -285,7 +283,8 @@ KGN.InGame = {
 			}
 		}
 	},
-	
+
+
 	make_url: function(){
 		var codes = "?";
 		for (var i = 0; i < this.cells.length; i++){
@@ -323,6 +322,13 @@ KGN.Cell = function(i, j, status){
 	this.palying = false;
 	
 	this.render = function(){
+
+    // add shadow
+        KGN.ctx.fillStyle="rgb(179,179,179)";
+    KGN.ctx.fillRect(this.x-2,this.y+2,KGN.CELL_SIZE+4,KGN.CELL_SIZE+4);
+    KGN.ctx.fillStyle="rgb(230,230,230)";
+    KGN.ctx.fillRect(this.x-2,this.y,KGN.CELL_SIZE+4,KGN.CELL_SIZE+4);
+
 		if (this.playing){
 			// this.color = "#ffffff";
       this.color = "#999999";
@@ -333,12 +339,19 @@ KGN.Cell = function(i, j, status){
 			var temp = this.color.toString(16);
 			this.color = "#" + temp + "" + temp + "" + temp;
 		}
+
+
 		KGN.ctx.fillStyle = this.color;
 		
 		KGN.ctx.beginPath();
 
     // squares mode
     if (KGN.shape == 0) {
+
+      //       x = KGN.cells[i][j].x-3;
+      // y = KGN.cells[i][j].y;
+      // // KGN.ctx.moveTo(this.x, this.y + KGN.CELL_RADIUS);
+
       KGN.ctx.moveTo(this.x, this.y + KGN.CELL_RADIUS);
       KGN.ctx.lineTo(this.x, this.y + KGN.CELL_SIZE - KGN.CELL_RADIUS);
       KGN.ctx.quadraticCurveTo(this.x, this.y + KGN.CELL_SIZE, this.x + KGN.CELL_RADIUS, this.y + KGN.CELL_SIZE);
@@ -545,6 +558,21 @@ function make_carve(){
   
   return d;
 }
+
+
+function make_bg(){
+  width = KGN.CELL_SIZE + 6;
+  for (var i = 0; i < KGN.cells.length; i++){
+    for (var j = 0; j < KGN.cells[i].length; j++){
+      x = KGN.cells[i][j].x-3;
+      y = KGN.cells[i][j].y;
+      // KGN.ctx.moveTo(this.x, this.y + KGN.CELL_RADIUS);
+      ctx.fillStyle="#FF0000";
+      ctx.fillRect(x,y,width,width);
+    }
+  }
+};
+
 
 function make_buttons() {
 
