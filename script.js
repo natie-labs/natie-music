@@ -284,9 +284,6 @@ KGN.InGame = {
 				this.cells[i][j].render();
 			}
 		}
-		// this.save_btn.render();
-		// this.clear_btn.render();
-		// this.gol_btn.render();
 	},
 	
 	make_url: function(){
@@ -312,7 +309,6 @@ KGN.InGame = {
 		}
 		window.history.replaceState('foobar', 'natie music', 'index.html');
 	},
-
 }
 
 
@@ -338,12 +334,11 @@ KGN.Cell = function(i, j, status){
 			this.color = "#" + temp + "" + temp + "" + temp;
 		}
 		KGN.ctx.fillStyle = this.color;
-    // console.log(this.color);
 		
 		KGN.ctx.beginPath();
 
     // squares mode
-    if (KGN.shape==0){
+    if (KGN.shape == 0) {
       KGN.ctx.moveTo(this.x, this.y + KGN.CELL_RADIUS);
       KGN.ctx.lineTo(this.x, this.y + KGN.CELL_SIZE - KGN.CELL_RADIUS);
       KGN.ctx.quadraticCurveTo(this.x, this.y + KGN.CELL_SIZE, this.x + KGN.CELL_RADIUS, this.y + KGN.CELL_SIZE);
@@ -354,31 +349,11 @@ KGN.Cell = function(i, j, status){
       KGN.ctx.lineTo(this.x + KGN.CELL_RADIUS, this.y);
       KGN.ctx.quadraticCurveTo(this.x, this.y, this.x, this.y + KGN.CELL_RADIUS);
 
-    // circles
+      // circles
     } else {
-      r = KGN.CELL_SIZE/2;
-      KGN.ctx.arc(this.x+r,this.y+r,r+1,0,2*Math.PI);
-
-    // triangles
-    } 
-    // else {
-    //   size = KGN.CELL_SIZE;
-    //   x = j * (size/2+KGN.CELL_GAP);
-    //   y = i * (size+KGN.CELL_GAP);    
-    //   side = size+2;
-    //   h = side * (Math.sqrt(3)/2);
-    //   if ((this.i+this.j)%2==0){    // on a diagnal
-    //     KGN.ctx.moveTo(x, y-h / 2);
-    //     KGN.ctx.lineTo(x-side / 2, y + h / 2);
-    //     KGN.ctx.lineTo(x+side / 2, y+h / 2);
-    //     KGN.ctx.lineTo(x, y-h / 2);
-    //   }else {
-    //     KGN.ctx.moveTo(x-side/2, y-h/2);
-    //     KGN.ctx.lineTo(x +side / 2, y - h/2);
-    //     KGN.ctx.lineTo(x, y+h / 2);
-    //     KGN.ctx.moveTo(x-side/2, y-h/2);
-    //   }
-    // }
+      r = KGN.CELL_SIZE / 2;
+      KGN.ctx.arc(this.x + r, this.y + r, r + 1, 0, 2 * Math.PI);
+    }
 
 		KGN.ctx.fill();		
 		
@@ -564,7 +539,6 @@ function make_carve(){
   }
 
   base_image.src = 'carve.png';
-  console.log(base_image)
   setTimeout(function () {
     d.resolve();
   }, 500);
@@ -653,9 +627,8 @@ function share_page(service) {
     var fbpopup = window.open("https://www.facebook.com/sharer/sharer.php?u=" + window.location.href, "pop", "width=600, height=400, scrollbars=no");
     return false;
   }
-  if (service == "twitter"){
-      window.open("https://twitter.com/share?url="+window.location.href, "share on twitter", "height=600,width=800");
+  if (service == "twitter") {
+    window.open("https://twitter.com/share?url=" + window.location.href, "share on twitter", "height=600,width=800");
   }
 }
-
 

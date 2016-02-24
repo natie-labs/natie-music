@@ -108,12 +108,44 @@
       url("http://db.onlinewebfonts.com/t/5d35a36bacbab824395170f9d9d949ea.svg#IndustryW00-Book") format("svg");
     }
 
+    .header {
+      top: 0;
+      width: 100%;
+      height: 200px;
+      position: absolute;
+    }
+
+    .logo{
+      width: 75px;
+      padding: 20px;
+      position: absolute;
+      z-index: 25;
+    }
+
+    .pageLink {
+      width: 75px;
+      right: 5%;
+      padding: 30px;
+      font-family: "Futura-ExtraBold";
+      color: white;
+      position: absolute;
+      z-index: 25;
+    }
+
     </style>
     
     <script>
     window.addEventListener('load', KGN.init, false);
     </script>
 </head>
+
+<div class="header">
+  <a href="http://natie.com"><img src="logo.png" class="logo"></img></a>
+  <div class="pageLink">
+    NATIE/LABS/MUSIC
+  </div>
+</div>
+
 <div class="pattern"></div>
 <canvas id="carveout"></canvas>
 <div id="container">
