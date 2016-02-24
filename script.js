@@ -575,11 +575,11 @@ function make_carve(){
 function make_buttons() {
 
     var buttonData = [
-      {"i" : 0, "name": "clear",      "icon" : "\uf1f8"}, 
-      {"i" : 1, "name": "makeURL",  "icon" : "\uf08e"}, 
-      {"i" : 2, "name": "random",     "icon" : "\uf074"}, 
+      {"i" : 0, "name": "clear",      "icon" : "\uf00d"}, //,      "img" : "clear.png"
+      {"i" : 1, "name": "makeURL",    "icon" : "\uf08e"}, 
+      {"i" : 2, "name": "random",     "icon" : "\uf074", }, 
       {"i" : 3, "name": "facebook",   "icon" : "\uf09a"},
-      {"i" : 4, "name": "twitter",   "icon" : "\uf099"}
+      {"i" : 4, "name": "twitter",    "icon" : "\uf099"}
     ]
 
     var svgContainer = d3.select(".buttons").append("svg")
@@ -607,9 +607,17 @@ function make_buttons() {
           .attr("x", function(d) {return d.i * 55 + 40})
           .attr('text-anchor', 'middle')
           .attr('dominant-baseline', 'central')
-          .attr('font-size', '20px')
+          .attr('font-size', '22px')
           .style("fill", function(d) {return ((d.i < 3) ? "white" : "rgb(255,125,30)") })
           .text(function(d) {return d.icon; });
+
+    // controls.append("svg:image")
+    //         .attr("y", 40)
+    //         .attr("x", function(d) {return d.i * 55 + 40})
+    //         .attr("width", 17)
+    //         .attr("height", 17)
+    //         .attr("xlink:href", function(d) {return d.img})
+
     $("#facebook").on("click", function(){share_page("facebook")});
     $("#twitter").on("click", function() {share_page("twitter")});
     $("#clear").click(function(){ KGN.InGame.clear_map(); });
