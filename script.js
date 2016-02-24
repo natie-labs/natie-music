@@ -598,7 +598,7 @@ function make_buttons() {
     circles.attr("cy", 40)
            .attr("cx", function(d) {return d.i * 55 + 40})
            .attr("r", 20)
-           .style("fill", "white")
+           .style("fill", function(d) {return ((d.i < 3) ? "transparent" : "white") })
            // .style("stroke", "#0d0d0d")
            // .style("stroke-width", 4);
 
@@ -608,11 +608,8 @@ function make_buttons() {
           .attr('text-anchor', 'middle')
           .attr('dominant-baseline', 'central')
           .attr('font-size', '20px')
-          .style("fill", "rgb(255,125,30)")
-          .text(function(d) {
-              return d.icon;
-          });
-
+          .style("fill", function(d) {return ((d.i < 3) ? "white" : "rgb(255,125,30)") })
+          .text(function(d) {return d.icon; });
     $("#facebook").on("click", function(){share_page("facebook")});
     $("#twitter").on("click", function() {share_page("twitter")});
     $("#clear").click(function(){ KGN.InGame.clear_map(); });
