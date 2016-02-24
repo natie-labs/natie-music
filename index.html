@@ -26,6 +26,14 @@
         display: table;
         background: rgb(255,125,30);
     }
+
+    svg{
+      left: 0; right: 0; top: 0; bottom: 0;
+      margin: auto;
+      position: absolute;
+      width: 300px;
+      height: 200px;
+    }
     
     div.sub_container {
         display: table-cell;
@@ -46,15 +54,16 @@
     
     .buttons {
         z-index: 25;
-        left: 2%;
         /*right: 20%;*/
         /*top: 10%;*/
-        top:0;
-        bottom:0;
-        max-height: 220px;
+      bottom: 2%;
+      left: 0;
+      right: 0;
+      
         margin: auto;
         position: absolute;
     }
+
     
     .pattern {
         background: url("pattern.jpg") center/cover no-repeat transparent;
