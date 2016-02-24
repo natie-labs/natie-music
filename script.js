@@ -28,8 +28,8 @@ var KGN = {
   // shape of keys
   shape: 0,
   BLACK:  "#f2f2f2",
-	OFF: 0x2a,	
-	ON: 0xda,
+	OFF: 0xff,	
+	ON: 0x99,
 	
 	VOLUME: 0.5,
 	// START_NOTE: 369.99,
@@ -328,15 +328,17 @@ KGN.Cell = function(i, j, status){
 	
 	this.render = function(){
 		if (this.playing){
-			this.color = "#ffffff";
+			// this.color = "#ffffff";
+      this.color = "#999999";
 		}
 		else{		
-			this.color = ~~(((this.status) ? KGN.ON : KGN.OFF) + 0xff*(KGN.WaveMap.curr_map[this.i][this.j] / KGN.WAVE_FORCE));
-			this.color = (this.color > 220) ? 220 : this.color
+			this.color = ~~(((this.status) ? KGN.ON : KGN.OFF) - 0x99*(KGN.WaveMap.curr_map[this.i][this.j] / KGN.WAVE_FORCE));
+			this.color = (this.color < 99) ? 99 : this.color
 			var temp = this.color.toString(16);
 			this.color = "#" + temp + "" + temp + "" + temp;
 		}
-		KGN.ctx.fillStyle = this.color;						
+		KGN.ctx.fillStyle = this.color;
+    // console.log(this.color);
 		
 		KGN.ctx.beginPath();
 
@@ -553,7 +555,7 @@ function make_carve(){
   canvas.height = 1.2*document.getElementById('game_world').width;
 
   base_image = new Image();
-  base_image.src = 'carve.png';
+  
 
   base_image.onload = function(){
     ctx.drawImage(base_image, 0, 0, canvas.width, canvas.height);
@@ -561,6 +563,8 @@ function make_carve(){
     IMG_DATA = ctx.getImageData(0, 0, canvas.width, canvas.height);
   }
 
+  base_image.src = 'carve.png';
+  console.log(base_image)
   setTimeout(function () {
     d.resolve();
   }, 500);
