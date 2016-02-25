@@ -2,163 +2,163 @@
 <html lang="jp">
 
 <head>
-    
-    <script src="http://d3js.org/d3.v3.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/components/menu.min.css">
-    <meta charset="utf-8">
-    <title>natie music</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tipsy/1.0.2/jquery.tipsy.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.tipsy/1.0.2/jquery.tipsy.css">
-    <link href="http://db.onlinewebfonts.com/c/5d35a36bacbab824395170f9d9d949ea?family=IndustryW00-Book" rel="stylesheet" type="text/css"/>
-    <script src="script.js"></script>
-    
-
-    <style type="text/css">
-    /*@import url(http://db.onlinewebfonts.com/c/5d35a36bacbab824395170f9d9d949ea?family=IndustryW00-Book);*/
-    body {
-        margin: 0;
-        padding: 0;
-        display: table-cell;
-        vertical-align: middle;
-        overflow: hidden;
-    }
-    
-    div#container {
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        position: absolute;
-        display: table;
-        background: rgb(255,125,30);
-    }
-
-    svg{
-      left: 0; right: 0; top: 0; bottom: 0;
-      margin: auto;
-      position: absolute;
-      width: 300px;
-      height: 200px;
-    }
-    
-    div.sub_container {
-        display: table-cell;
-        vertical-align: middle;
-    }
-    
-    #game_world {
-        z-index: 0;
-        display: none;
-        vertical-align: middle;
-        position: absolute;
-        left: 0;
-        right: 0;
-        top: 0;
-        bottom: 0;
-        margin: auto;
-    }
-    
-    .buttons {
-        z-index: 25;
-        /*right: 20%;*/
-        /*top: 10%;*/
-      bottom: 2%;
-      left: 0;
-      right: 0;
-      
-        margin: auto;
-        position: absolute;
-    }
-
-    
-    .pattern {
-        background: url("pattern.jpg") center/cover no-repeat transparent;
-        /*position: relative;*/
-        z-index: 20;
-        position: absolute;
-        display: block;
-        width: 100%;
-        height: 100%;
-        border-image-repeat: stretch;
-        opacity: 0.15
-    }
-    
-    #carve,
-    #carveout {
-        display: hidden;
-        vertical-align: middle;
-        position: absolute;
-        left: 0;
-        right: 0;
-        top: 0;
-        bottom: 0;
-        margin: auto;
-        z-index: 15;
-
-    }
-    .tipsy {
-      font-family: "IndustryW00-Book", industry, Menlo, Monaco, Consolas, 'Courier New', monospace;
-      font-size: 1em;
-      src: url("http://db.onlinewebfonts.com/t/5d35a36bacbab824395170f9d9d949ea.eot");
-      src: url("http://db.onlinewebfonts.com/t/5d35a36bacbab824395170f9d9d949ea.eot?#iefix") format("embedded-opentype"),
-      url("http://db.onlinewebfonts.com/t/5d35a36bacbab824395170f9d9d949ea.woff") format("woff"),
-      url("http://db.onlinewebfonts.com/t/5d35a36bacbab824395170f9d9d949ea.ttf") format("truetype"),
-      url("http://db.onlinewebfonts.com/t/5d35a36bacbab824395170f9d9d949ea.svg#IndustryW00-Book") format("svg");
-    }
-
-    .header {
-      top: 0;
-      width: 100%;
-      height: 200px;
-      position: absolute;
-    }
-
-    .logo{
-      width: 75px;
-      padding: 20px;
-      position: absolute;
-      z-index: 25;
-    }
-
-    .pageLink {
-      width: 75px;
-      right: 5%;
-      padding: 30px;
-      font-family: "Futura-ExtraBold", futura-pt, 'Futura Std', Futura, Arial, sans-serif;
-      color: white;
-      position: absolute;
-      z-index: 25;
-    }
-
-    .tipsy{
-      min-width: 65px;
-    }
-
-    </style>
-    
-    <script>
-    window.addEventListener('load', KGN.init, false);
-    </script>
+  <script src="http://d3js.org/d3.v3.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/components/menu.min.css">
+  <meta charset="utf-8">
+  <title>natie music</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tipsy/1.0.2/jquery.tipsy.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.tipsy/1.0.2/jquery.tipsy.css">
+  <link href="http://db.onlinewebfonts.com/c/5d35a36bacbab824395170f9d9d949ea?family=IndustryW00-Book" rel="stylesheet" type="text/css" />
+  <script src="script.js"></script>
+  <style type="text/css">
+  /*@import url(http://db.onlinewebfonts.com/c/5d35a36bacbab824395170f9d9d949ea?family=IndustryW00-Book);*/
+  
+  body {
+    margin: 0;
+    padding: 0;
+    display: table-cell;
+    vertical-align: middle;
+    overflow: hidden;
+  }
+  
+  div#container {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    display: table;
+    background: rgb(255, 125, 30);
+  }
+  
+  svg {
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    position: absolute;
+    width: 300px;
+    height: 200px;
+  }
+  
+  div.sub_container {
+    display: table-cell;
+    vertical-align: middle;
+  }
+  
+  #game_world {
+    z-index: 0;
+    display: none;
+    vertical-align: middle;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+  }
+  
+  .buttons {
+    z-index: 25;
+    /*right: 20%;*/
+    /*top: 10%;*/
+    bottom: 2%;
+    left: 0;
+    right: 0;
+    margin: auto;
+    position: absolute;
+  }
+  
+  .pattern {
+    background: url("pattern.jpg") center/cover no-repeat transparent;
+    /*position: relative;*/
+    z-index: 20;
+    position: absolute;
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-image-repeat: stretch;
+    opacity: 0.15
+  }
+  
+  #carve,
+  #carveout {
+    display: hidden;
+    vertical-align: middle;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    z-index: 15;
+  }
+  
+  .tipsy {
+    font-family: "IndustryW00-Book", industry, Menlo, Monaco, Consolas, 'Courier New', monospace;
+    font-size: 1em;
+    src: url("http://db.onlinewebfonts.com/t/5d35a36bacbab824395170f9d9d949ea.eot");
+    src: url("http://db.onlinewebfonts.com/t/5d35a36bacbab824395170f9d9d949ea.eot?#iefix") format("embedded-opentype"), url("http://db.onlinewebfonts.com/t/5d35a36bacbab824395170f9d9d949ea.woff") format("woff"), url("http://db.onlinewebfonts.com/t/5d35a36bacbab824395170f9d9d949ea.ttf") format("truetype"), url("http://db.onlinewebfonts.com/t/5d35a36bacbab824395170f9d9d949ea.svg#IndustryW00-Book") format("svg");
+  }
+  
+  .header {
+    top: 0;
+    width: 100%;
+    height: 200px;
+    position: absolute;
+  }
+  
+  .logo {
+    width: 75px;
+    padding: 20px;
+    position: absolute;
+    z-index: 25;
+  }
+  
+  .pageLink {
+    width: 75px;
+    right: 5%;
+    padding: 30px;
+    font-family: "futura-extrabold", futura-pt, "Futura Std", Futura, Arial, sans-serif !important;
+    font-weight: bold;
+    font-style: italic;
+    color: white;
+    position: absolute;
+    z-index: 25;
+  }
+  
+  .tipsy {
+    min-width: 65px;
+  }
+  
+  @font-face {
+    font-family: futura-extrabold;
+    src: url("futura.ttf");
+  }
+  </style>
+  <script>
+  window.addEventListener('load', KGN.init, false);
+  </script>
 </head>
-
 <div class="header">
-  <a href="http://natie.com"><img src="logo.png" class="logo"></img></a>
+  <a href="http://natie.com"><img src="logo.png" class="logo"></img>
+  </a>
   <div class="pageLink">
     NATIE/LABS/MUSIC
   </div>
 </div>
-
 <div class="pattern"></div>
 <canvas id="carveout"></canvas>
 <div id="container">
-    <div class="buttons">
-    </div>
-    <div class="sub_container">
-        <canvas id="game_world" tabindex='1'>
-        </canvas>
-    </div>
+  <div class="buttons">
+  </div>
+  <div class="sub_container">
+    <canvas id="game_world" tabindex='1'>
+    </canvas>
+  </div>
 </div>
 </body>
 

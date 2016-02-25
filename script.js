@@ -324,7 +324,7 @@ KGN.Cell = function(i, j, status){
 	this.render = function(){
 
     // add shadow
-        KGN.ctx.fillStyle="rgb(179,179,179)";
+    KGN.ctx.fillStyle="rgb(179,179,179)";
     KGN.ctx.fillRect(this.x-2,this.y+2,KGN.CELL_SIZE+4,KGN.CELL_SIZE+4);
     KGN.ctx.fillStyle="rgb(230,230,230)";
     KGN.ctx.fillRect(this.x-2,this.y,KGN.CELL_SIZE+4,KGN.CELL_SIZE+4);
