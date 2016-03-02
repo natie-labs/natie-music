@@ -42,6 +42,7 @@ var KGN = {
 	state:	null,
 
 	init: function() {				
+    // NProgress.start();
 		
     KGN.canvas = document.getElementById('game_world');
 		KGN.ctx = KGN.canvas.getContext('2d');
@@ -531,6 +532,7 @@ KGN.Voice = function(context, frequency){
 
 function unhide_canvas(){
   $("#game_world").css("display", "block");
+  // NProgress.done();
 }
 
 // create png mask for canvas
