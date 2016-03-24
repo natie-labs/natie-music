@@ -24,8 +24,6 @@ var KGN = {
 	WAVE_FORCE: 80,
 	WAVE_DAMP: 0.1,
 
-  // shape of keys
-  // shape: 0,
   BLACK:  "#f2f2f2",
 	OFF: 0xff,	
 	ON: 0x99,
@@ -52,8 +50,7 @@ var KGN = {
 		KGN.canvas.height = KGN.HEIGHT;		
 
     make_buttons();
-    make_carve().done(unhide_canvas);
-
+    make_carve();
 
 		var iOS = ( navigator.userAgent.match(/(iPad|iPhone|iPod)/g) ? true : false );
 		
@@ -233,7 +230,6 @@ KGN.InGame = {
 	},
 	
 	update: function(){		
-
 		if (KGN.Input.state != KGN.Input.UNSET){	
 			var broke = false;
 			for (var i = 0; i < this.cells.length; i++){
@@ -349,28 +345,15 @@ KGN.Cell = function(i, j, status){
 		// draw the shape
     KGN.ctx.beginPath();
 
-    // squares mode
-    // if (KGN.shape == 0) {
-
-      //       x = KGN.cells[i][j].x-3;
-      // y = KGN.cells[i][j].y;
-      // // KGN.ctx.moveTo(this.x, this.y + KGN.CELL_RADIUS);
-
-      KGN.ctx.moveTo(this.x, this.y + KGN.CELL_RADIUS);
-      KGN.ctx.lineTo(this.x, this.y + KGN.CELL_SIZE - KGN.CELL_RADIUS);
-      KGN.ctx.quadraticCurveTo(this.x, this.y + KGN.CELL_SIZE, this.x + KGN.CELL_RADIUS, this.y + KGN.CELL_SIZE);
-      KGN.ctx.lineTo(this.x + KGN.CELL_SIZE - KGN.CELL_RADIUS, this.y + KGN.CELL_SIZE);
-      KGN.ctx.quadraticCurveTo(this.x + KGN.CELL_SIZE, this.y + KGN.CELL_SIZE, this.x + KGN.CELL_SIZE, this.y + KGN.CELL_SIZE - KGN.CELL_RADIUS);
-      KGN.ctx.lineTo(this.x + KGN.CELL_SIZE, this.y + KGN.CELL_RADIUS);
-      KGN.ctx.quadraticCurveTo(this.x + KGN.CELL_SIZE, this.y, this.x + KGN.CELL_SIZE - KGN.CELL_RADIUS, this.y);
-      KGN.ctx.lineTo(this.x + KGN.CELL_RADIUS, this.y);
-      KGN.ctx.quadraticCurveTo(this.x, this.y, this.x, this.y + KGN.CELL_RADIUS);
-
-      // circles
-    // } else {
-    //   r = KGN.CELL_SIZE / 2;
-    //   KGN.ctx.arc(this.x + r, this.y + r, r + 1, 0, 2 * Math.PI);
-    // }
+    KGN.ctx.moveTo(this.x, this.y + KGN.CELL_RADIUS);
+    KGN.ctx.lineTo(this.x, this.y + KGN.CELL_SIZE - KGN.CELL_RADIUS);
+    KGN.ctx.quadraticCurveTo(this.x, this.y + KGN.CELL_SIZE, this.x + KGN.CELL_RADIUS, this.y + KGN.CELL_SIZE);
+    KGN.ctx.lineTo(this.x + KGN.CELL_SIZE - KGN.CELL_RADIUS, this.y + KGN.CELL_SIZE);
+    KGN.ctx.quadraticCurveTo(this.x + KGN.CELL_SIZE, this.y + KGN.CELL_SIZE, this.x + KGN.CELL_SIZE, this.y + KGN.CELL_SIZE - KGN.CELL_RADIUS);
+    KGN.ctx.lineTo(this.x + KGN.CELL_SIZE, this.y + KGN.CELL_RADIUS);
+    KGN.ctx.quadraticCurveTo(this.x + KGN.CELL_SIZE, this.y, this.x + KGN.CELL_SIZE - KGN.CELL_RADIUS, this.y);
+    KGN.ctx.lineTo(this.x + KGN.CELL_RADIUS, this.y);
+    KGN.ctx.quadraticCurveTo(this.x, this.y, this.x, this.y + KGN.CELL_RADIUS);
 
 		KGN.ctx.fill();
 		
@@ -535,7 +518,6 @@ KGN.Voice = function(context, frequency){
 
 function unhide_canvas(){
   $("#game_world").css("display", "block");
-  // NProgress.done();
 }
 
 // create png mask for canvas
@@ -554,31 +536,11 @@ function make_carve(){
     ctx.drawImage(base_image, 0, 0, canvas.width, canvas.height);
     ctx.fill();
     IMG_DATA = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    unhide_canvas();
   }
 
   base_image.src = 'carve.png';
-  setTimeout(function () {
-    d.resolve();
-  }, 500);
-  
-  return d;
 }
-
-
-// creates the background 
-function make_bg(){
-  width = KGN.CELL_SIZE + 6;
-  for (var i = 0; i < KGN.cells.length; i++){
-    for (var j = 0; j < KGN.cells[i].length; j++){
-      x = KGN.cells[i][j].x-3;
-      y = KGN.cells[i][j].y;
-      // KGN.ctx.moveTo(this.x, this.y + KGN.CELL_RADIUS);
-      ctx.fillStyle="#FF0000";
-      ctx.fillRect(x,y,width,width);
-    }
-  }
-};
-
 
 function make_buttons() {
     var buttonData = [
@@ -619,6 +581,7 @@ function make_buttons() {
           .style("fill", function(d) {return ((d.i < 3) ? "white" : "rgb(255,125,30)") })
           .text(function(d) {return d.icon; });
 
+    // add tool tips
     $(document).ready(
       $(".controlButtons").tipsy({
       gravity: 's',
@@ -644,8 +607,6 @@ function make_buttons() {
             }
         }
     });
-    // 
-    // $("#shape").click(function(){ KGN.shape=1-KGN.shape; });
 }
 
 function share_page(service) {
