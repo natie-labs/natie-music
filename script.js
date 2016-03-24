@@ -1,5 +1,3 @@
-// http://paulirish.com/2011/requestanimationframe-for-smart-animating
-// shim layer with setTimeout fallback
 window.requestAnimFrame = (function(){
 	return  window.requestAnimationFrame     || 
 		  window.webkitRequestAnimationFrame || 
@@ -11,8 +9,9 @@ window.requestAnimFrame = (function(){
 		  };
 })();
 
-var IMG_DATA = null;
+var IMG_DATA = null; // the top canvas, which is the carveout 
 
+// Object defining the game
 var KGN = {
 	WIDTH: 	0,     HEIGHT: 0,
 
@@ -26,7 +25,7 @@ var KGN = {
 	WAVE_DAMP: 0.1,
 
   // shape of keys
-  shape: 0,
+  // shape: 0,
   BLACK:  "#f2f2f2",
 	OFF: 0xff,	
 	ON: 0x99,
@@ -42,7 +41,6 @@ var KGN = {
 	state:	null,
 
 	init: function() {				
-    // NProgress.start();
 		
     KGN.canvas = document.getElementById('game_world');
 		KGN.ctx = KGN.canvas.getContext('2d');
@@ -141,8 +139,11 @@ KGN.Input = {
       var y = event.pageY - $("#carveout")[0].offsetTop;
 
       var i = ((IMG_DATA.width * y) + x) * 4 + 3;
+
+      // get alpha value of clicked cell
       var alpha = IMG_DATA.data[((IMG_DATA.width * y) + x) * 4 + 3];
 
+      // only let transparent cells be clickable —- this does not filter for dragging
       if (alpha==0){
         KGN.Input.set(e);  
       }
@@ -311,7 +312,7 @@ KGN.InGame = {
 	},
 }
 
-
+// object representing a cell in the grid
 KGN.Cell = function(i, j, status){
 	this.i = i;
 	this.j = j;
@@ -324,17 +325,18 @@ KGN.Cell = function(i, j, status){
 	
 	this.render = function(){
 
-    // add shadow
+    // add drop shadow
     KGN.ctx.fillStyle="rgb(179,179,179)";
     KGN.ctx.fillRect(this.x-2,this.y+2,KGN.CELL_SIZE+4,KGN.CELL_SIZE+4);
     KGN.ctx.fillStyle="rgb(230,230,230)";
     KGN.ctx.fillRect(this.x-2,this.y,KGN.CELL_SIZE+4,KGN.CELL_SIZE+4);
 
+    // set playing color to gray
 		if (this.playing){
 			// this.color = "#ffffff";
       this.color = "#999999";
-		}
-		else{		
+		} else {		
+      // if not playing, calculate color according to wave decays
 			this.color = ~~(((this.status) ? KGN.ON : KGN.OFF) - 0x99*(KGN.WaveMap.curr_map[this.i][this.j] / KGN.WAVE_FORCE));
 			this.color = (this.color < 99) ? 99 : this.color
 			var temp = this.color.toString(16);
@@ -344,10 +346,11 @@ KGN.Cell = function(i, j, status){
 
 		KGN.ctx.fillStyle = this.color;
 		
-		KGN.ctx.beginPath();
+		// draw the shape
+    KGN.ctx.beginPath();
 
     // squares mode
-    if (KGN.shape == 0) {
+    // if (KGN.shape == 0) {
 
       //       x = KGN.cells[i][j].x-3;
       // y = KGN.cells[i][j].y;
@@ -364,12 +367,12 @@ KGN.Cell = function(i, j, status){
       KGN.ctx.quadraticCurveTo(this.x, this.y, this.x, this.y + KGN.CELL_RADIUS);
 
       // circles
-    } else {
-      r = KGN.CELL_SIZE / 2;
-      KGN.ctx.arc(this.x + r, this.y + r, r + 1, 0, 2 * Math.PI);
-    }
+    // } else {
+    //   r = KGN.CELL_SIZE / 2;
+    //   KGN.ctx.arc(this.x + r, this.y + r, r + 1, 0, 2 * Math.PI);
+    // }
 
-		KGN.ctx.fill();		
+		KGN.ctx.fill();
 		
 	};
 	
@@ -562,6 +565,7 @@ function make_carve(){
 }
 
 
+// creates the background 
 function make_bg(){
   width = KGN.CELL_SIZE + 6;
   for (var i = 0; i < KGN.cells.length; i++){
@@ -577,7 +581,6 @@ function make_bg(){
 
 
 function make_buttons() {
-
     var buttonData = [
       {"i" : 0, "name": "clear",      "icon" : "\uf00d"}, //,      "img" : "clear.png"
       {"i" : 1, "name": "link",    "icon" : "\uf08e"}, 
@@ -616,13 +619,6 @@ function make_buttons() {
           .style("fill", function(d) {return ((d.i < 3) ? "white" : "rgb(255,125,30)") })
           .text(function(d) {return d.icon; });
 
-    // controls.append("svg:image")
-    //         .attr("y", 40)
-    //         .attr("x", function(d) {return d.i * 55 + 40})
-    //         .attr("width", 17)
-    //         .attr("height", 17)
-    //         .attr("xlink:href", function(d) {return d.img})
-
     $(document).ready(
       $(".controlButtons").tipsy({
       gravity: 's',
@@ -648,6 +644,7 @@ function make_buttons() {
             }
         }
     });
+    // 
     // $("#shape").click(function(){ KGN.shape=1-KGN.shape; });
 }
 
