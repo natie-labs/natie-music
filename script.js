@@ -571,69 +571,13 @@ function make_carve() {
 }
 
 function make_buttons() {
-    // var buttonData = [
-    //     { "i": 0, "name": "clear", "icon": "\uf00d" }, //,      "img" : "clear.png"
-    //     { "i": 1, "name": "link", "icon": "\uf08e" },
-    //     { "i": 2, "name": "random", "icon": "\uf074", },
-    //     { "i": 3, "name": "facebook", "icon": "\uf09a" },
-    //     { "i": 4, "name": "twitter", "icon": "\uf099" }
-    // ]
-
-    // var svgContainer = d3.select(".buttons").append("svg")
-    //     .attr("width", 300)
-    //     .attr("height", 200)
-    //     .attr("id", "controls");
-
-    // var controls = svgContainer.selectAll("g")
-    //     .data(buttonData)
-    //     .enter().append("g")
-    //     .attr("style", "cursor: pointer")
-    //     .attr("id", function(d) {
-    //         return d.name
-    //     })
-    //     .attr("class", "controlButtons");
-
-    // var circles = controls.append("circle");
-
-    // circles.attr("cy", 40)
-    //     .attr("cx", function(d) {
-    //         return d.i * 55 + 40
-    //     })
-    //     .attr("r", 20)
-    //     .style("fill", function(d) {
-    //         return ((d.i < 3) ? "transparent" : "white")
-    //     })
-    //     // .style("stroke", "#0d0d0d")
-    //     // .style("stroke-width", 4);
-
-    // controls.append("text").attr('font-family', 'FontAwesome')
-    //     .attr("y", 40)
-    //     .attr("x", function(d) {
-    //         return d.i * 55 + 40
-    //     })
-    //     .attr('text-anchor', 'middle')
-    //     .attr('dominant-baseline', 'central')
-    //     .attr('font-size', '22px')
-    //     .style("fill", function(d) {
-    //         return ((d.i < 3) ? "white" : "rgb(255,125,30)")
-    //     })
-    //     .text(function(d) {
-    //         return d.icon;
-    //     });
-
-    // // add tool tips
-    // $(document).ready(
-    //     $(".controlButtons").tipsy({
-    //         gravity: 's',
-    //         html: true,
-    //         title: function() {
-    //             var d = this.__data__;
-    //             return d.name.replace(/(\r\n|\n|\r)/gm, "");
-    //         },
-    //         fade: true,
-
-    //     }));
-
+    $('.circular.button').popup({
+        variation: "tiny inverted",
+        position: "top center",
+        prefer: "opposite",
+        inline: "true",
+        duration: 100
+    });
     $("#facebook").on("click", function() { share_page("facebook") });
     $("#twitter").on("click", function() { share_page("twitter") });
     $("#clear").click(function() { KGN.InGame.clear_map(); });
