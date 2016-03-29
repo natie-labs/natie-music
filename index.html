@@ -7,15 +7,15 @@
     <meta charset="utf-8">
     <title>natie music</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tipsy/1.0.2/jquery.tipsy.min.js"></script>
+    <script src="node_modules/clipboard/dist/clipboard.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.tipsy/1.0.2/jquery.tipsy.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/semantic.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/semantic.min.js"></script>
     <!-- <script src='nprogress.js'></script> -->
     <!-- <link rel='stylesheet' href='nprogress.css' /> -->
-    <script src="script.js"></script>
+    <script src="script.js" defer></script>
     <style type="text/css">
-    k);
-    */ body {
+     body {
         margin: 0;
         padding: 0;
         display: table-cell;
@@ -142,16 +142,19 @@
         bottom: 0;
         text-align: center;
     }
-    .controls{
-      left: 0;
-      right: 0;
-      margin: auto;
+    
+    .controls {
+        left: 0;
+        right: 0;
+        margin: auto;
     }
+    
     .ui..button:hover {
         background: transparent !important;
     }
-    .column{
-      text-align: center !important;
+    
+    .column {
+        text-align: center !important;
     }
     </style>
 </head>
@@ -179,7 +182,7 @@
                 <button class="circular  ui icon button" id="clear" data-content="clear">
                     <i class=" icon remove"></i>
                 </button>
-                <button class="circular  ui icon button" id="save" data-content="save">
+                <button class="circular  ui icon button" id="copy" data-content="copy">
                     <i class=" icon copy"></i>
                 </button>
                 <button class="circular  ui icon button" id="random" data-content="random">
@@ -191,6 +194,17 @@
                 <button class="circular  ui icon button" id="twitter" data-content="twitter">
                     <i class=" icon twitter"></i>
                 </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="ui modal">
+    <i class="close icon"></i>
+    <div class="content">
+        <div class="ui form">
+            <h4 class="ui dividing header">Copy link</h4>
+            <div class="field">
+                <input type="text" readonly="" value="">
             </div>
         </div>
     </div>
