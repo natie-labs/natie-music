@@ -1,19 +1,22 @@
 $(window).load(function() {
+    window.requestAnimFrame = (function() {
+        return window.requestAnimationFrame ||
+            window.webkitRequestAnimationFrame ||
+            window.mozRequestAnimationFrame ||
+            window.oRequestAnimationFrame ||
+            window.msRequestAnimationFrame ||
+            function(callback) {
+                window.setTimeout(callback, 1000 / 60);
+            };
+    })();
     KGN.init();
-})
 
-window.requestAnimFrame = (function() {
-    return window.requestAnimationFrame ||
-        window.webkitRequestAnimationFrame ||
-        window.mozRequestAnimationFrame ||
-        window.oRequestAnimationFrame ||
-        window.msRequestAnimationFrame ||
-        function(callback) {
-            window.setTimeout(callback, 1000 / 60);
-        };
-})();
+
+});
 
 var IMG_DATA = null; // the top canvas, which is the carveout 
+
+var PAGE_URL = "";
 
 // Object defining the game
 var KGN = {
@@ -307,7 +310,9 @@ KGN.InGame = {
             }
             codes += code + ".";
         }
-        window.history.replaceState('foobar', 'natie music', 'index.html' + codes);
+        PAGE_URL = codes;
+        return PAGE_URL;
+        // window.history.replaceState('foobar', 'natie music', 'index.html' + codes);
     },
 
     clear_map: function() {
@@ -319,7 +324,8 @@ KGN.InGame = {
                 this.cells[i][j].status = 0;
             }
         }
-        window.history.replaceState('foobar', 'natie music', 'index.html');
+        PAGE_URL = "";
+        // window.history.replaceState('foobar', 'natie music', 'index.html');
     },
 }
 
@@ -581,7 +587,9 @@ function make_buttons() {
     $("#facebook").on("click", function() { share_page("facebook") });
     $("#twitter").on("click", function() { share_page("twitter") });
     $("#clear").click(function() { KGN.InGame.clear_map(); });
-    $("#link").click(function() { KGN.InGame.make_url(); });
+    $("#copy").click(function() {
+        clipboard.copy(KGN.InGame.make_url());
+    });
     $('#random').click(function() {
         var istart = ~~(KGN.InGame.cells.length / 3);
         for (var i = istart; i < KGN.InGame.cells.length - istart; i++) {
@@ -596,10 +604,10 @@ function make_buttons() {
 function share_page(service) {
     KGN.InGame.make_url();
     if (service == "facebook") {
-        var fbpopup = window.open("https://www.facebook.com/sharer/sharer.php?u=" + window.location.href, "pop", "width=600, height=400, scrollbars=no");
+        var fbpopup = window.open("https://www.facebook.com/sharer/sharer.php?u=" + PAGE_URL, "pop", "width=600, height=400, scrollbars=no");
         return false;
     }
     if (service == "twitter") {
-        window.open("https://twitter.com/share?url=" + window.location.href, "share on twitter", "height=600,width=800");
+        window.open("https://twitter.com/share?url=" + PAGE_URL, "share on twitter", "height=600,width=800");
     }
 }
