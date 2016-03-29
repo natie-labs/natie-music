@@ -607,7 +607,7 @@ function make_buttons() {
     });
     clipboard.on('success', function(e) {
       console.log("hi");
-        $("#copy").next().html("copied!");
+        $("#copy").next().html("link was copied!");
     });
     clipboard.on('error', function(e) {
         $('.ui.modal').find("input").attr("value", PAGE_URL);
