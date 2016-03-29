@@ -7,6 +7,8 @@
     <meta charset="utf-8">
     <title>natie music</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tipsy/1.0.2/jquery.tipsy.min.js"></script>
+    <meta property="og:title" content="A Natie Labs Creative Experiment :: Make Music"/>
+    <meta property="og:description" content="Dance to your own unique tune. Have fun while you're at it. Love, Natie. "/>
     <script src="node_modules/clipboard/dist/clipboard.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.tipsy/1.0.2/jquery.tipsy.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/semantic.min.css">
@@ -16,10 +18,6 @@
     <script src="script.js" defer></script>
     <style type="text/css">
      body {
-        margin: 0;
-        padding: 0;
-        display: table-cell;
-        vertical-align: middle;
         overflow: hidden;
     }
     
@@ -104,7 +102,7 @@
         src: url("http://db.onlinewebfonts.com/t/5d35a36bacbab824395170f9d9d949ea.eot?#iefix") format("embedded-opentype"), url("http://db.onlinewebfonts.com/t/5d35a36bacbab824395170f9d9d949ea.woff") format("woff"), url("http://db.onlinewebfonts.com/t/5d35a36bacbab824395170f9d9d949ea.ttf") format("truetype"), url("http://db.onlinewebfonts.com/t/5d35a36bacbab824395170f9d9d949ea.svg#IndustryW00-Book") format("svg");
     }
     
-    .header {
+    .pageheader {
         top: 0;
         width: 100%;
         height: 200px;
@@ -149,16 +147,12 @@
         margin: auto;
     }
     
-    .ui..button:hover {
-        background: transparent !important;
-    }
-    
     .column {
         text-align: center !important;
     }
     </style>
 </head>
-<div class="header">
+<div class="pageheader">
     <a href="http://natie.com"><img src="logo.png" class="logo"></img>
     </a>
     <div class="pageLink">
@@ -182,7 +176,7 @@
                 <button class="circular  ui icon button" id="clear" data-content="clear">
                     <i class=" icon remove"></i>
                 </button>
-                <button class="circular  ui icon button" id="copy" data-content="copy">
+                <button class="circular  ui icon button" id="copy" data-content="copy to clipboard">
                     <i class=" icon copy"></i>
                 </button>
                 <button class="circular  ui icon button" id="random" data-content="random">
@@ -202,7 +196,7 @@
     <i class="close icon"></i>
     <div class="content">
         <div class="ui form">
-            <h4 class="ui dividing header">Copy link</h4>
+            <h4 class="ui header">Copy link</h4>
             <div class="field">
                 <input type="text" readonly="" value="">
             </div>

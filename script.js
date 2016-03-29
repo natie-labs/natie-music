@@ -310,7 +310,7 @@ KGN.InGame = {
             }
             codes += code + ".";
         }
-        
+
         window.history.replaceState('foobar', 'natie music', 'index.html' + codes);
         PAGE_URL = window.location.href;
         return PAGE_URL;
@@ -578,7 +578,19 @@ function make_carve() {
 }
 
 function make_buttons() {
+
     $('.circular.button').popup({
+        variation: "tiny inverted",
+        position: "top center",
+        prefer: "opposite",
+        inline: "true",
+        duration: 100
+    });
+    $("#copy").popup({
+        onHidden: function() {
+            var popup = this;
+            this.html("copy to clipboard")
+        },
         variation: "tiny inverted",
         position: "top center",
         prefer: "opposite",
@@ -593,29 +605,14 @@ function make_buttons() {
             return KGN.InGame.make_url();
         }
     });
+    clipboard.on('success', function(e) {
+      console.log("hi");
+        $("#copy").next().html("copied!");
+    });
     clipboard.on('error', function(e) {
         $('.ui.modal').find("input").attr("value", PAGE_URL);
         $('.ui.modal').modal('show');
     });
-    // $("#copy").click(function() {
-    //     clipboard.copy(KGN.InGame.make_url()).then(
-    //         function() {
-    //             console.log("success");
-    //         },
-    //         function(err) {
-    //             console.log("hi");
-    //             $("#copy").popup("remove popup");
-    //             $("#copy").attr("data-content", PAGE_URL);
-    //             $("#copy").popup({
-    //                 variation: "tiny inverted",
-    //                 position: "top center",
-    //                 prefer: "opposite",
-    //                 inline: "true",
-    //                 duration: 100
-    //             });
-    //         }
-    //     );
-    // });
     $('#random').click(function() {
         var istart = ~~(KGN.InGame.cells.length / 3);
         for (var i = istart; i < KGN.InGame.cells.length - istart; i++) {
