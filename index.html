@@ -6,8 +6,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
     <title>natie music</title>
     <meta charset="utf-8">
-     <meta name="keywords" content="music tone matrix natie labs experiments branding, animation, storytelling, design, websites, interactive, copywriting, digital, mobile design, print, social media, collateral, direct">
-    <meta property="og:title" content="A Natie Labs Creative Experiment :: Make Music" />
+    <meta name="keywords" content="music tone matrix natie labs experiments branding, animation, storytelling, design, websites, interactive, copywriting, digital, mobile design, print, social media, collateral, direct">
     <meta name="description" content="Dance to your own unique tune. Have fun while you're at it. Love, Natie." />
     <meta property="og:locale" content="en_US" />
     <meta property="og:image" content="share.png" />
@@ -74,10 +73,8 @@
     
     .pattern {
         background: url("pattern.jpg") center/cover no-repeat transparent;
-        /*position: relative;*/
         z-index: 20;
         position: absolute;
-        display: block;
         width: 100%;
         height: 100%;
         border-image-repeat: stretch;
@@ -97,41 +94,17 @@
         z-index: 15;
     }
     
-    .tipsy {
-        font-family: "IndustryW00-Book", industry, Menlo, Monaco, Consolas, 'Courier New', monospace;
-        font-size: 1em;
-        src: url("http://db.onlinewebfonts.com/t/5d35a36bacbab824395170f9d9d949ea.eot");
-        src: url("http://db.onlinewebfonts.com/t/5d35a36bacbab824395170f9d9d949ea.eot?#iefix") format("embedded-opentype"), url("http://db.onlinewebfonts.com/t/5d35a36bacbab824395170f9d9d949ea.woff") format("woff"), url("http://db.onlinewebfonts.com/t/5d35a36bacbab824395170f9d9d949ea.ttf") format("truetype"), url("http://db.onlinewebfonts.com/t/5d35a36bacbab824395170f9d9d949ea.svg#IndustryW00-Book") format("svg");
-    }
-    
-    .pageheader {
-        top: 0;
-        width: 100%;
-        height: 200px;
-        position: absolute;
-    }
-    
-    .logo {
-        width: 75px;
-        margin: 2vh;
-        position: absolute;
-        z-index: 25;
-    }
-    
-    .pageLink {
-        margin: 4vh;
-        font-family: futura-pt, "Futura Std", Futura, Arial, sans-serif !important;
-        font-weight: bold;
+    h5,.logo {
+        font-family: futura-pt, 'Futura Std', Futura, Arial, sans-serif;
         font-style: italic;
-        right: 0;
-        top: 0;
+        z-index: 30;
         color: white;
-        position: absolute;
-        z-index: 25;
     }
     
-    .tipsy {
-        min-width: 65px;
+    .ui.secondary.menu {
+        z-index: 19;
+        background: transparent;
+        margin: 0;
     }
     
     .footer {
@@ -154,14 +127,16 @@
     }
     </style>
 </head>
-<div class="pageheader">
-    <a href="http://natie.com"><img src="logo.png" class="logo"></img>
+<div class="pattern"></div>
+<div class="ui large secondary menu">
+    <a class="ui image item"><img src="logo.png" class="logo"></img>
     </a>
-    <div class="pageLink">
-        DANCE TO YOUR OWN TUNE
+    <div class="right menu">
+        <div class="ui item">
+            <h5>DANCE TO YOUR OWN TUNE</h5></div>
     </div>
 </div>
-<div class="pattern"></div>
+
 <canvas id="carveout"></canvas>
 <div id="container">
     <div class="buttons">
