@@ -17,12 +17,3 @@ in terminal, start a simple HTTP server using `python -m SimpleHTTPServer`.
 
 Or, if the the `npm` package `http-server` is installed, just run `http-server`.  
 go to `localhost:8000` or the port specified by the console output.
-
-## URL redirect setup
-github pages supports a custom domain by putting one in a CNAME file committed to the root directory. For example, http://www.natie.com/natie-music would be the content of the file.  
-see instructions here: https://help.github.com/articles/quick-start-setting-up-a-custom-domain/  
-then set up DNS on the domain manager (GoDaddy) to reroute. the settings i suggest are  
-NAME = `www`  
-TYPE = `CNAME`  
-TTL = `1h`  
-DATA = `natielabs.github.io`

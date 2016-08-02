@@ -14,7 +14,7 @@ $(window).load(function() {
 
 });
 
-var IMG_DATA = null; // the top canvas, which is the carveout 
+var IMG_DATA = null; // the top canvas, which is the carveout
 
 var PAGE_URL = "";
 
@@ -142,8 +142,8 @@ KGN.Input = {
             e.preventDefault();
             // var topmost = document.elementFromPoint(e.x, e.y);
 
-            var x = event.pageX - $("#carveout")[0].offsetLeft;
-            var y = event.pageY - $("#carveout")[0].offsetTop;
+            var x = e.pageX - $("#carveout")[0].offsetLeft;
+            var y = e.pageY - $("#carveout")[0].offsetTop;
 
             var i = ((IMG_DATA.width * y) + x) * 4 + 3;
 

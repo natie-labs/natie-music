@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="jp">
+<html lang="en">
 
 <head>
     <script src="http://d3js.org/d3.v3.min.js"></script>
@@ -12,6 +12,7 @@
     <meta property="og:image" content="share.png" />
     <meta property="og:title" content="A Natie Labs Creative Experiment :: Make Music" />
     <meta property="og:description" content="Dance to your own unique tune. Have fun while you're at it. Love, Natie. " />
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
     <script src="node_modules/clipboard/dist/clipboard.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.tipsy/1.0.2/jquery.tipsy.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/semantic.min.css">
@@ -21,7 +22,7 @@
     body {
         overflow: hidden;
     }
-    
+
     div#container {
         top: 0;
         left: 0;
@@ -29,9 +30,9 @@
         height: 100%;
         position: absolute;
         display: table;
-        background: rgb(255, 125, 30);
+        background: #FF6E00;
     }
-    
+
     svg {
         left: 0;
         right: 0;
@@ -42,12 +43,12 @@
         width: 300px;
         height: 200px;
     }
-    
+
     div.sub_container {
         display: table-cell;
         vertical-align: middle;
     }
-    
+
     #game_world {
         z-index: 0;
         display: none;
@@ -59,7 +60,7 @@
         bottom: 0;
         margin: auto;
     }
-    
+
     .buttons {
         z-index: 25;
         /*right: 20%;*/
@@ -70,7 +71,7 @@
         margin: auto;
         position: absolute;
     }
-    
+
     .pattern {
         background: url("pattern.jpg") center/cover no-repeat transparent;
         z-index: 20;
@@ -80,7 +81,7 @@
         border-image-repeat: stretch;
         opacity: 0.15
     }
-    
+
     #carve,
     #carveout {
         display: hidden;
@@ -93,21 +94,22 @@
         margin: auto;
         z-index: 15;
     }
-    
+
     h5,.logo {
         font-family: futura-pt, 'Futura Std', Futura, Arial, sans-serif;
         font-style: italic;
         z-index: 30;
         color: white;
+        text-align: right;
     }
-    
+
     .ui.large.menu {
         /*z-index: 19;*/
         /*background: transparent;*/
         margin: 0;
         font-size: 2em;
     }
-    
+
     .footer {
         width: 100%;
         z-index: 20;
@@ -116,13 +118,15 @@
         bottom: 0;
         text-align: center;
     }
-    
+    .footer .column .column {
+      width: auto !important;
+    }
     .controls {
         left: 0;
         right: 0;
         margin: auto;
     }
-    
+
     .column {
         text-align: center !important;
     }
@@ -130,11 +134,11 @@
 </head>
 <div class="pattern"></div>
 <div class="ui large secondary menu">
-    <a class="ui image item" href="http://natie.com"><img src="logo.png" class="logo"></img>
+    <a class="ui image item" href="http://natie.com" target="_blank"><img src="logo.png" class="logo"></img>
     </a>
     <div class="right menu">
         <div class="ui item">
-            <h5>DANCE TO YOUR OWN TUNE</h5></div>
+            <h5>A NATIE LABS EXPERIMENT<br>DANCE TO YOUR OWN TUNE</h5></div>
     </div>
 </div>
 
@@ -149,7 +153,7 @@
 </div>
 <div class="footer">
     <div class="ui three column centered grid">
-        <div class="three wide column">
+        <div class="column">
             <div class="controls">
                 <button class="circular  ui icon button" id="clear" data-content="clear">
                     <i class=" icon remove"></i>
